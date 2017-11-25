@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1511631648 source:c:\users\note-tgm-10\desktop\pessoal\ms\2017-2\edpa\trabalho\hash\main.cpp
+	<iostream>
+	<ctime>
+	<random>
+	<chrono>
+
