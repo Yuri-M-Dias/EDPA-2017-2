@@ -2,44 +2,49 @@
 #include <ctime>
 #include <random>
 #include <chrono>
-#include <Windows.h>
+#include <thread>
 
 using namespace std;
-int A[0];
-int B[0];
 
-int calculaHash(int elemento);
-int randomGen();
+int calculaHash(int chave, int tamanho);
+int geraNumeroRandomico();
+int hash_Insere_Linear();
 int main()
 {
     int n;
-    cout<<"Insira o de n:"<<endl;
+    cout<<"Insira o valor de n:"<<endl;
     cin>>n;
+
+    int A[n];
+    int B[n];
 
     for(int i=0; i<n; i++)
     {
         cout<<"i: "<<i<<endl;
-        cout<<"random: "<<randomGen()<<endl;
+        int r = geraNumeroRandomico();
+        cout<<"random: "<<geraNumeroRandomico()<<endl;
+        A[i]=r;
+        B[i]=r;
     }
 
     clock_t start = clock();
 
-    for(int i=0; i<100000000; i++)
+    for(int i=0; i<n; i++)
     {
-
+      //  hash_Insere_Linear()
     }
 
     clock_t end = clock();
 
-    cout << "Execucao em millisegundos: " << (end-start)/double(CLOCKS_PER_SEC)*1000 << endl;
+    cout << "execucao em millisegundos: " << (end-start)/double(CLOCKS_PER_SEC)*1000 << endl;
 
     return 0;
 }
 
-
-void Hash_Insere_Linear(int elemento, int T[])
+void hash_Insere_Linear(int elemento, int T[], int tamanho)
 {
-    int posicao = calculaHash(elemento);
+    int posicao = calculaHash(elemento, tamanho);
+
     do
     {
         // Permite inserção de repetido
@@ -56,11 +61,17 @@ void Hash_Insere_Linear(int elemento, int T[])
     while(posicao < 1000);
 }
 
-int randomGen()
+int geraNumeroRandomico()
 {
-    Sleep(1);
+    this_thread::sleep_for(chrono::milliseconds(1));
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     default_random_engine generator (seed);
     uniform_int_distribution<int> distribution(INT_MIN, INT_MAX);
+
     return distribution(generator);
+}
+
+int calculaHash(int chave, int tamanho)
+{
+    return chave % tamanho;
 }
