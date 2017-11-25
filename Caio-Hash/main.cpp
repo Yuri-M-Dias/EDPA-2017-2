@@ -3,6 +3,7 @@
 #include <random>
 #include <chrono>
 #include <thread>
+#include <climits>
 
 using namespace std;
 
@@ -18,25 +19,27 @@ int main()
     int A[n];
     int B[n];
 
-    for(int i=0; i<n; i++)
-    {
-        cout<<"i: "<<i<<endl;
-        int r = geraNumeroRandomico();
-        cout<<"random: "<<geraNumeroRandomico()<<endl;
-        A[i]=r;
-        B[i]=r;
-    }
-
     clock_t start = clock();
 
     for(int i=0; i<n; i++)
     {
-      //  hash_Insere_Linear()
+        //cout<<"i: "<<i<<endl;
+        int r = geraNumeroRandomico();
+        //cout<<"random: "<<geraNumeroRandomico()<<endl;
+        A[i]=r;
+        //B[i]=r;
     }
-
     clock_t end = clock();
 
-    cout << "execucao em millisegundos: " << (end-start)/double(CLOCKS_PER_SEC)*1000 << endl;
+
+    /*for(int i=0; i<n; i++)
+    {
+      //  hash_Insere_Linear()
+    }
+    */
+
+
+    cout << "execucao em millisegundos: " << (end-start)*1000/double(CLOCKS_PER_SEC) << endl;
 
     return 0;
 }
