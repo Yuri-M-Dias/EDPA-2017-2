@@ -5,7 +5,6 @@ enable_language(CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # These options can be turned on/off from the 'make' command.

@@ -123,32 +123,32 @@ EDPA20172-hash.o/fast:
 	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-hash.o.dir/build
 .PHONY : EDPA20172-hash.o/fast
 
-src/test.o: src/test.cpp.o
+src/test_time_keeping.o: src/test_time_keeping.cpp.o
 
-.PHONY : src/test.o
+.PHONY : src/test_time_keeping.o
 
 # target to build an object file
-src/test.cpp.o:
-	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-hash.o.dir/src/test.cpp.o
-.PHONY : src/test.cpp.o
+src/test_time_keeping.cpp.o:
+	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-hash.o.dir/src/test_time_keeping.cpp.o
+.PHONY : src/test_time_keeping.cpp.o
 
-src/test.i: src/test.cpp.i
+src/test_time_keeping.i: src/test_time_keeping.cpp.i
 
-.PHONY : src/test.i
+.PHONY : src/test_time_keeping.i
 
 # target to preprocess a source file
-src/test.cpp.i:
-	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-hash.o.dir/src/test.cpp.i
-.PHONY : src/test.cpp.i
+src/test_time_keeping.cpp.i:
+	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-hash.o.dir/src/test_time_keeping.cpp.i
+.PHONY : src/test_time_keeping.cpp.i
 
-src/test.s: src/test.cpp.s
+src/test_time_keeping.s: src/test_time_keeping.cpp.s
 
-.PHONY : src/test.s
+.PHONY : src/test_time_keeping.s
 
 # target to generate assembly for a file
-src/test.cpp.s:
-	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-hash.o.dir/src/test.cpp.s
-.PHONY : src/test.cpp.s
+src/test_time_keeping.cpp.s:
+	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-hash.o.dir/src/test_time_keeping.cpp.s
+.PHONY : src/test_time_keeping.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... EDPA20172-hash.o"
-	@echo "... src/test.o"
-	@echo "... src/test.i"
-	@echo "... src/test.s"
+	@echo "... src/test_time_keeping.o"
+	@echo "... src/test_time_keeping.i"
+	@echo "... src/test_time_keeping.s"
 .PHONY : help
 
 

@@ -86,7 +86,7 @@
          </MakeCommands>
       </Target>
       </Build>
-      <Unit filename="/home/yuri/Dev/masters/EDPA-2017-2/src/test.cpp">
+      <Unit filename="/home/yuri/Dev/masters/EDPA-2017-2/src/test_time_keeping.cpp">
          <Option target="EDPA20172-hash.o"/>
       </Unit>
       <Unit filename="/home/yuri/Dev/masters/EDPA-2017-2/CMakeLists.txt">

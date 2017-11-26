@@ -1,6 +1,6 @@
 # EDPA-2017-2
 
-# Como rodar o projeto
+## Como rodar o projeto
 
 Na linha de comando:
 
@@ -10,9 +10,17 @@ $ cmake .. -G"CodeBlocks - Unix Makefiles"
 $ make
 $ ./EDPA20172-hash.o
 ```
-Basta seguir os prompts do programa. *(Precisamos atualizar isso para não precisar de digitar...)*
+Basta seguir os prompts do programa.
+**(Precisamos atualizar isso para não precisar de digitar...)**
 
 Nessa compilação, será gerado um .cbp na pasta `build/`, que pode ser importado como um projeto do CodeBlocks.
+
+## Para instalar o software necessário no Ubuntu
+
+``` bash
+$ sudo apt-get install build-essential
+$ sudo apt-get install cmake
+```
 
 ## Integrantes
 * Caio Sousa <@Caio-Sousa>
