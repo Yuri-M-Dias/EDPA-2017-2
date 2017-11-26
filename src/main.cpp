@@ -5,14 +5,23 @@
 #include <thread>
 #include <climits>
 
+#define INTERACTIVE 0
+
 using namespace std;
 
 int geraNumeroRandomico();
 
 int main() {
     int n;
+
+#if INTERACTIVE
     cout << "Insira o valor de n:" << endl;
     cin >> n;
+#else
+    n = 500;
+#endif
+
+    cout << "Tomando n como " << n << endl;
 
     int A[n];
     clock_t start = clock();
