@@ -22,7 +22,10 @@ include_directories(include)
 #Can manually add the sources using the set command as follows:
 #set(SOURCES src/mainapp.cpp src/Student.cpp)
 
+set(TEST_TIME_KEEP src/tests/test_time_keep.cpp)
+
 #However, the file(GLOB...) allows for wildcard additions:
 file(GLOB SOURCES "src/*.cpp")
 
 add_executable(EDPA20172-hash.o ${SOURCES})
+add_executable(test_time_keep.o ${SOURCES})
