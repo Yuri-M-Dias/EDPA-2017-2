@@ -1,4 +1,5 @@
 # EDPA-2017-2
+[![Build Status](https://travis-ci.org/Yuri-M-Dias/EDPA-2017-2.svg?branch=master)](https://travis-ci.org/Yuri-M-Dias/EDPA-2017-2)
 
 ## Como rodar o projeto
 
