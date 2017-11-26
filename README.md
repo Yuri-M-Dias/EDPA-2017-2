@@ -30,7 +30,7 @@ $ sudo apt-get install cmake
 
 ## Anotações de discussão
 
-### Funções hash
+### Funções myHash
 
 * Função de verificar qual é o próximo número primo maior do que n
 * Função que usa o tamanho do vetor

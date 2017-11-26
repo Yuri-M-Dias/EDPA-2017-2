@@ -129,7 +129,7 @@ src/test_time_keeping.o: src/test_time_keeping.cpp.o
 
 # target to build an object file
 src/test_time_keeping.cpp.o:
-	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-hash.o.dir/src/test_time_keeping.cpp.o
+	$(MAKE) -f CMakeFiles/EDPA20172-hash.o.dir/build.make CMakeFiles/EDPA20172-myHash.o.dir/src/test_time_keeping.cpp.o
 .PHONY : src/test_time_keeping.cpp.o
 
 src/test_time_keeping.i: src/test_time_keeping.cpp.i

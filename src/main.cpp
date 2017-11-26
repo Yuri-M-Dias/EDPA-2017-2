@@ -1,56 +1,105 @@
-#include <iostream>
-#include <ctime>
-#include <random>
-#include <chrono>
-#include <thread>
-#include <climits>
+//
+// Created by wgalvao on 11/26/17.
+//
 
-#define INTERACTIVE 0
+/* HASHING - LINEAR AND QUADRATIC PROBING */
+
+#include <stdio.h>
+#include <iostream>
 
 using namespace std;
+int tsize = 11;
 
-int geraNumeroRandomico();
+int myHash(int key)
+{
+    int i ;
+    i = key % tsize ;
+    return i;
+}
 
-int main() {
-    int n;
+//-------Sondagem Linear-------
+int linear_hash(int key)
+{
+    int i ;
+    i = (key + 1) % tsize ;
+    return i ;
+}
 
-#if INTERACTIVE
-    cout << "Insira o valor de n:" << endl;
-    cin >> n;
-#else
-    n = 500;
-#endif
+//-------Sondagem Quadrática-------
+int squad_hash(int key, int j)
+{
+    int i ;
+    i = (key + (j * j)) % tsize ;
+    return i ;
+}
 
-    cout << "Tomando n como " << n << endl;
+void linear_insert(){
+    int hash_array[11];
+    int hash_value;
+    int elem_array[] = {7, 36, 18, 62};
+    int key;
 
-    int A[n];
-    clock_t start = clock();
-
-    for (int i = 0; i < n; i++) {
-        int r = geraNumeroRandomico();
-        A[i] = r;
+    for (int l = 0; l < 11; l++) {
+        hash_array[l] = -1;
     }
+    //exemplo 1 n = m
+    //total de elementos n = 7
+    int n = 11;
+    for(int k = 0; k < n; k++)
+    {
+        key = elem_array[k] ;
+        hash_value = myHash(key);
+        while (hash_array[hash_value] != -1)
+        {
+            hash_value = linear_hash(hash_value);
 
-    clock_t end = clock();
+        }
+        hash_array[hash_value] = key ;
+    }
+    cout << "Mostrando os elementos do hash_array" << endl;
+    for (int i = 0; i < 11; i++)
+    {
+        cout << "Elemento na posição " << i << ": " << hash_array[i] << endl;
+        //printf("\n  Element at position %d: %d",i,hash_array[i]);
+    }
+}
 
-    // CLOCKS_PER_SEC == 10^6 = 1 microsecond
-    double microsecondsTotal = difftime(end, start);
-    double millisecondsTotal = microsecondsTotal / 1000;
-    double secondsTotal = microsecondsTotal / double(CLOCKS_PER_SEC);
+void squad_insert(){
+    int hash_array[7];
+    int hash_value;
+    int elem_array[] = {50, 700, 76, 85, 92, 73, 101};
+    int key ,j;
 
-    cout << "Execucao em microsegundos: " << microsecondsTotal << endl;
-    cout << "Execucao em millisegundos: " << millisecondsTotal << endl;
-    cout << "Execucao em segundos: " << secondsTotal << endl;
+    for (int l = 0; l < 7; l++) {
+        hash_array[l] = -1;
+    }
+    //exemplo 1 n = m
+    //total de elementos n = 7
+    int n = 7;
+    for(int k = 0; k < n; k++)
+    {
+        j = 1;
+        key = elem_array[k] ;
+        hash_value = myHash(key);
+        while (hash_array[hash_value] != -1)
+        {
+            hash_value = squad_hash(hash_value,j);
+            j++;
+        }
+        hash_array[hash_value] = key ;
+    }
+    cout << "Mostrando os elementos do hash_array" << endl;
+    for (int i = 0; i < 7; i++)
+    {
+        cout << "Elemento na posição " << i << ": " << hash_array[i] << endl;
+        //printf("\n  Element at position %d: %d",i,hash_array[i]);
+    }
+}
+
+int main()
+{
+    //squad_insert();
+    linear_insert();
 
     return 0;
 }
-
-int geraNumeroRandomico() {
-    this_thread::sleep_for(chrono::milliseconds(1));
-    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-    default_random_engine generator(seed);
-    uniform_int_distribution<int> distribution(INT_MIN, INT_MAX);
-
-    return distribution(generator);
-}
-
