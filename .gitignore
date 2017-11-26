@@ -13,10 +13,6 @@
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
 # WebStorm's recommended: https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
 ## User-specific stuff:
 .idea/**/workspace.xml
@@ -28,6 +24,8 @@ yarn-error.log*
 # WebStorm's configs
 !.idea/runConfigurations/
 .idea/**/*.iml
+.idea/*.xml
+.idea/.name
 
 ## File-based project format:
 *.iws
@@ -73,3 +71,5 @@ yarn-error.log*
 
 # Build directory
 build/
+
+cmake-build-debug/
