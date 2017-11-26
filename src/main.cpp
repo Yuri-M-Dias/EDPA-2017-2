@@ -58,9 +58,13 @@ int *populateArrayWithRandomNumbers(int size) {
 }
 
 void printTimeDiff(double start, double end) {
+    if(std::isnan(start) || std::isnan(end)){
+        return;
+    }
     double diff = end - start;
     double millisecondsTotal = diff;
-    double secondsTotal = diff / double(CLOCKS_PER_MS);
+    double secondsTotal = diff * chrono::milliseconds::period::num /
+                          chrono::milliseconds::period::den;
 
     cout << "Execução em millisegundos: " << millisecondsTotal << endl;
     cout << "Execução em segundos: " << secondsTotal << endl;
