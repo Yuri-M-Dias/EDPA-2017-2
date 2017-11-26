@@ -30,6 +30,10 @@ $ sudo apt-get install cmake
 
 ## Anotações de discussão
 
+### Objetivos do trabalho
+
+* _Tabela hash com endereçamento aberto com sondagem linear e sondagem quadrática_
+
 ### Funções hash
 
 * Função de verificar qual é o próximo número primo maior do que n
