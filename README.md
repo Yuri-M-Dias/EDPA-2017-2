@@ -1,4 +1,5 @@
 # EDPA-2017-2
+[![Build Status](https://travis-ci.org/Yuri-M-Dias/EDPA-2017-2.svg?branch=master)](https://travis-ci.org/Yuri-M-Dias/EDPA-2017-2)
 
 ## Como rodar o projeto
 
@@ -30,7 +31,11 @@ $ sudo apt-get install cmake
 
 ## Anotações de discussão
 
-### Funções myHash
+### Objetivos do trabalho
+
+* _Tabela hash com endereçamento aberto com sondagem linear e sondagem quadrática_
+
+### Funções hash
 
 * Função de verificar qual é o próximo número primo maior do que n
 * Função que usa o tamanho do vetor
