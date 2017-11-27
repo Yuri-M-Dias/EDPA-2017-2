@@ -1,15 +1,11 @@
-//
-// Created by wgalvao on 11/26/17.
-//
-
-/* HASHING - LINEAR AND QUADRATIC PROBING */
-
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <ctime>
 #include <random>
 #include <chrono>
 #include <thread>
+
+// Necessário apenas se usar INT_MAX e INT_MIN do C(32-bits precision)
 #include <climits>
 
 // Usando para não repetir INT_MAX e INT_MIN em todo lugar
@@ -66,7 +62,7 @@ int *populateArrayWithRandomNumbers(int size) {
 }
 
 void printTimeDiff(double start, double end) {
-    if(std::isnan(start) || std::isnan(end)){
+    if (std::isnan(start) || std::isnan(end)) {
         return;
     }
     double diff = end - start;
@@ -78,30 +74,29 @@ void printTimeDiff(double start, double end) {
     cout << "Execução em segundos: " << secondsTotal << endl;
 }
 
-int myHash(int key)
-{
-    int i ;
-    i = key % tsize ;
+/* HASHING - LINEAR AND QUADRATIC PROBING */
+
+int myHash(int key) {
+    int i;
+    i = key % tsize;
     return i;
 }
 
 //-------Sondagem Linear-------
-int linear_hash(int key)
-{
-    int i ;
-    i = (key + 1) % tsize ;
-    return i ;
+int linear_hash(int key) {
+    int i;
+    i = (key + 1) % tsize;
+    return i;
 }
 
 //-------Sondagem Quadrática-------
-int squad_hash(int key, int j)
-{
-    int i ;
-    i = (key + (j * j)) % tsize ;
-    return i ;
+int squad_hash(int key, int j) {
+    int i;
+    i = (key + (j * j)) % tsize;
+    return i;
 }
 
-void linear_insert(){
+void linear_insert() {
     int hash_array[11];
     int hash_value;
     int elem_array[] = {7, 36, 18, 62};
@@ -113,30 +108,27 @@ void linear_insert(){
     //exemplo 1 n = m
     //total de elementos n = 7
     int n = 4;
-    for(int k = 0; k < n; k++)
-    {
-        key = elem_array[k] ;
+    for (int k = 0; k < n; k++) {
+        key = elem_array[k];
         hash_value = myHash(key);
-        while (hash_array[hash_value] != -1)
-        {
+        while (hash_array[hash_value] != -1) {
             hash_value = linear_hash(hash_value);
 
         }
-        hash_array[hash_value] = key ;
+        hash_array[hash_value] = key;
     }
     cout << "Mostrando os elementos do hash_array" << endl;
-    for (int i = 0; i < 11; i++)
-    {
+    for (int i = 0; i < 11; i++) {
         cout << "Elemento na posição " << i << ": " << hash_array[i] << endl;
         //printf("\n  Element at position %d: %d",i,hash_array[i]);
     }
 }
 
-void squad_insert(){
+void squad_insert() {
     int hash_array[7];
     int hash_value;
     int elem_array[] = {50, 700, 76, 85, 92, 73, 101};
-    int key ,j;
+    int key, j;
 
     for (int l = 0; l < 7; l++) {
         hash_array[l] = -1;
@@ -144,21 +136,18 @@ void squad_insert(){
     //exemplo 1 n = m
     //total de elementos n = 7
     int n = 7;
-    for(int k = 0; k < n; k++)
-    {
+    for (int k = 0; k < n; k++) {
         j = 1;
-        key = elem_array[k] ;
+        key = elem_array[k];
         hash_value = myHash(key);
-        while (hash_array[hash_value] != -1)
-        {
-            hash_value = squad_hash(hash_value,j);
+        while (hash_array[hash_value] != -1) {
+            hash_value = squad_hash(hash_value, j);
             j++;
         }
-        hash_array[hash_value] = key ;
+        hash_array[hash_value] = key;
     }
     cout << "Mostrando os elementos do hash_array" << endl;
-    for (int i = 0; i < 7; i++)
-    {
+    for (int i = 0; i < 7; i++) {
         cout << "Elemento na posição " << i << ": " << hash_array[i] << endl;
         //printf("\n  Element at position %d: %d",i,hash_array[i]);
     }
@@ -177,9 +166,7 @@ int main() {
 
     int *array = populateArrayWithRandomNumbers(n);
 
-//    for (int i = 0; i < n; ++i) {
-//        cout << "A["<< i <<"] = " << array[i] << endl;
-//    }
+    linear_insert();
 
     return 0;
 }
