@@ -44,7 +44,7 @@ void linear_insert(){
     }
     //exemplo 1 n = m
     //total de elementos n = 7
-    int n = 11;
+    int n = 4;
     for(int k = 0; k < n; k++)
     {
         key = elem_array[k] ;
