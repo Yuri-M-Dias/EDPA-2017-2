@@ -5,3 +5,13 @@
 	<random>
 	<chrono>
 
+1511910961 source:c:\users\note-tgm-10\documents\github\edpa-2017-2\caio-hash\main.cpp
+	<iostream>
+	<iomanip>
+	<ctime>
+	<random>
+	<chrono>
+	<thread>
+	<limits>
+	<string.h>
+
