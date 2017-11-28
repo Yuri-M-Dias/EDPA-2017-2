@@ -38,8 +38,8 @@ int main()
          }
     }
 
-    int PROXIMO_PRIMO = proximoPrimo(n);
-    int PRIMO_ANTERIOR = numeroPrimoAnterior(n);
+    //int PROXIMO_PRIMO = proximoPrimo(n);
+    //int PRIMO_ANTERIOR = numeroPrimoAnterior(n);
     int vetorNumeroAleatorio[n];
 
     for(int i=0; i<n; i++)
