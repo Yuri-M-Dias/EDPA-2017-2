@@ -5,5 +5,3 @@ script:
   - mkdir build
   - cd build
   - cmake .. && make
-
-# Inert, just to make travis build
