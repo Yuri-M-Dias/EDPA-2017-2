@@ -5,14 +5,7 @@
 #include <chrono>
 #include <thread>
 
-// Necessário apenas se usar INT_MAX e INT_MIN do C(32-bits precision)
-#include <climits>
-
-// Usando para não repetir INT_MAX e INT_MIN em todo lugar
-#define RNG_MAX INT16_MAX
-#define RNG_MIN INT16_MIN
-
-#define CLOCKS_PER_MS (CLOCKS_PER_SEC / 1000)
+#include "timeAndRNG.h"
 
 #define INTERACTIVE false
 
@@ -21,29 +14,11 @@ int tsize = 11;
 
 /* Definições */
 
-int geraNumeroRandomico();
-
 int *populateArrayWithRandomNumbers(int size);
 
 void printTimeDiff(double start, double end);
 
-double getCurrentTimeInMillis();
-
 /* Funções */
-
-int geraNumeroRandomico() {
-    this_thread::sleep_for(chrono::milliseconds(1));
-    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-    default_random_engine generator(seed);
-    uniform_int_distribution<int> distribution(RNG_MIN, RNG_MIN);
-    return distribution(generator);
-}
-
-double getCurrentTimeInMillis() {
-    return chrono::duration_cast<chrono::milliseconds>(
-            chrono::steady_clock::now().time_since_epoch()
-    ).count();
-}
 
 int *populateArrayWithRandomNumbers(int size) {
     int *array = new int[size];
@@ -70,8 +45,7 @@ void printTimeDiff(double start, double end) {
     double secondsTotal = diff * chrono::milliseconds::period::num /
                           chrono::milliseconds::period::den;
 
-    cout << "Execução em millisegundos: " << millisecondsTotal << endl;
-    cout << "Execução em segundos: " << secondsTotal << endl;
+    cout << "Execução: " << millisecondsTotal << "ms, "<< secondsTotal << "s" << endl;
 }
 
 /* HASHING - LINEAR AND QUADRATIC PROBING */
@@ -155,14 +129,14 @@ void squad_insert() {
 
 int main() {
     int n;
+
 #if INTERACTIVE
     cout << "Insira o valor de n:" << endl;
     cin >> n;
 #else
     n = 5000;
 #endif
-    cout << "n = " << n << endl;
-    cout << "Gerando números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
+    cout << "Gerando " << n << " números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
 
     int *array = populateArrayWithRandomNumbers(n);
 
