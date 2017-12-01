@@ -43,12 +43,12 @@ void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeC
 
 void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga);
 
-const int INVALID_ARRAY_VALUE = 0;
-const float LIMITE_FATOR_DE_CARGA = 0.1;
+const int VALOR_FLAG_VAZIO = -1;
+const float LIMITE_FATOR_DE_CARGA = 0.7;
 
 /* Main */
 int main(int argc, char *argv[]) {
-    int n = 500;
+    int n = 10000;
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
 
@@ -72,19 +72,26 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+int calculaTamanhoVetor(int numeroItens, float fatorDeCarga){
+    int tamanhoVetor = numeroItens + (int) ceil(numeroItens * fatorDeCarga);
+    cout << "Fator de carga: " << setprecision(2) << 1.0 - fatorDeCarga << endl;
+    cout << "Tamanho real do vetor: " << tamanhoVetor << endl;
+    return tamanhoVetor;
+}
+
+int* criaVetorTabelaHash(int tamanhoVetor) {
+    int *tabelaHash = new int[tamanhoVetor];
+
+    // Enche o vetor com VAZIO
+    memset(tabelaHash, VALOR_FLAG_VAZIO, tamanhoVetor * sizeof(tabelaHash[0]));
+    return tabelaHash;
+}
+
 void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga) {
     cout << "****** Inserção Linear ******" << endl;
 
-    int tamanhoVetor = numeroItens + (int) ceil(numeroItens * fatorDeCarga);
-
-    cout << "Fator de carga: " << setprecision(2) << 1.0 - fatorDeCarga << endl;
-    cout << "Tamanho real do vetor: " << tamanhoVetor << endl;
-    cout << "Funcao Hash: Tamanho do vetor" << endl;
-
-    int *tabelaHash = new int[tamanhoVetor];
-
-    // Enche o vetor com 0
-    memset(tabelaHash, -1, sizeof(tabelaHash));
+    int tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
+    int *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
     double start, end;
     start = getCurrentTimeInMillis();
@@ -105,16 +112,8 @@ void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeC
 void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga) {
     cout << "****** Inserção Quadrática ******" << endl;
 
-    int tamanhoVetor = numeroItens + (int) ceil(numeroItens * fatorDeCarga);
-
-    cout << "Fator de carga: " << setprecision(2) << 1.0 - fatorDeCarga << endl;
-    cout << "Tamanho real do vetor: " << tamanhoVetor << endl;
-    cout << "Funcao Hash: Tamanho do vetor" << endl;
-
-    int *tabelaHash = new int[tamanhoVetor];
-
-    // Enche o vetor com 0
-    memset(tabelaHash, -1, sizeof(tabelaHash));
+    int tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
+    int *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
     double start, end;
     start = getCurrentTimeInMillis();
@@ -142,13 +141,12 @@ void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrim
 
     int posicao = chave;
     for (int i = 1; i <= tamanhoVetorHash; i++) {
-        if (T[posicao] == INVALID_ARRAY_VALUE) {
+        if (T[posicao] == VALOR_FLAG_VAZIO) {
             T[posicao] = elemento;
             //cout<<"Insercao:: posicao="<<posicao<<", elemento:"<<elemento<<endl;
             return;
         } else if (T[posicao] == elemento) {
-            cout << "Elemento repetido: " << elemento << endl;
-            cout << "Nao sera inserido!" << endl;
+            //cout << "Elemento repetido: " << elemento << ", não será inserido." << endl;
             return;
         }
 
@@ -169,30 +167,27 @@ void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numero
     unsigned int somaQuadratica = 0;
     unsigned int incrementa = 1;
     while (true) {
+        //TODO: TERMINAR!!!!
         if(somaQuadratica != 0 && posicao == chave){
             cout << "Deu uma volta" << endl;
             return;
         }
-        if (T[posicao] == INVALID_ARRAY_VALUE) {
+        if (T[posicao] == VALOR_FLAG_VAZIO) {
             T[posicao] = elemento;
             //cout<<"Insercao:: posicao="<<posicao<<", elemento:"<<elemento<<endl;
             return;
         } else if (T[posicao] == elemento) {
-            cout << "Elemento repetido: " << elemento << ", não será inserido." << endl;
+            //cout << "Elemento repetido: " << elemento << ", não será inserido." << endl;
             return;
         } else {
             somaQuadratica = incrementa * incrementa;
-            cout<<"Colisao: "<<somaQuadratica<<", i: "<<incrementa<<endl;
+            //cout<<"Colisao: "<<somaQuadratica<<", i: "<<incrementa<<endl;
             incrementa++;
         }
 
         // Percorre circular
         posicao = (chave + somaQuadratica) % tamanhoVetorHash;
     }
-}
-
-int geraNumeroRandomicoRand() {
-    return (rand() % INT32_MAX);
 }
 
 int calculaHash(int chave, int tamanho) {
