@@ -3,6 +3,8 @@
 extern const long RNG_MAX;
 extern const long RNG_MIN;
 
+using namespace std;
+
 int geraNumeroRandomico() {
     this_thread::sleep_for(chrono::milliseconds(1));
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();

@@ -7,8 +7,6 @@
 
 #include "timeAndRNG.h"
 
-#define INTERACTIVE false
-
 using namespace std;
 
 extern const long RNG_MAX;
@@ -21,6 +19,29 @@ int tsize = 11;
 int *populateArrayWithRandomNumbers(int size);
 
 void printTimeDiff(double start, double end);
+
+void linear_insert();
+
+/* Main */
+int main(int argc, char *argv[]) {
+    int n = 5000;
+    if (argc < 2) {
+        cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
+
+//        cout << "Insira o valor de n:" << endl;
+//        cin >> n;
+    } else {
+        n = stoi(argv[1]);
+    }
+
+    cout << "Gerando " << n << " números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
+
+    int *array = populateArrayWithRandomNumbers(n);
+
+    linear_insert();
+
+    return 0;
+}
 
 /* Funções */
 
@@ -49,7 +70,7 @@ void printTimeDiff(double start, double end) {
     double secondsTotal = diff * chrono::milliseconds::period::num /
                           chrono::milliseconds::period::den;
 
-    cout << "Execução: " << millisecondsTotal << "ms, "<< secondsTotal << "s" << endl;
+    cout << "Execução: " << millisecondsTotal << "ms, " << secondsTotal << "s" << endl;
 }
 
 /* HASHING - LINEAR AND QUADRATIC PROBING */
@@ -131,20 +152,3 @@ void squad_insert() {
     }
 }
 
-int main() {
-    int n;
-
-#if INTERACTIVE
-    cout << "Insira o valor de n:" << endl;
-    cin >> n;
-#else
-    n = 5000;
-#endif
-    cout << "Gerando " << n << " números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
-
-    int *array = populateArrayWithRandomNumbers(n);
-
-    linear_insert();
-
-    return 0;
-}

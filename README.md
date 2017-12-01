@@ -11,8 +11,13 @@ $ cmake .. -G"CodeBlocks - Unix Makefiles"
 $ make
 $ ./EDPA20172-hash.o
 ```
-Basta seguir os prompts do programa.
-**(Precisamos atualizar isso para não precisar de digitar...)**
+Para executar com um n padrão (5000).
+
+Para customizar o tamanho do n:
+
+``` shell
+$ ./EDPA20172-hash.o 4020
+```
 
 Nessa compilação, será gerado um .cbp na pasta `build/`, que pode ser importado como um projeto do CodeBlocks.
 
@@ -33,7 +38,7 @@ $ sudo apt-get install cmake
 
 ### Objetivos do trabalho
 
-* _Tabela hash com endereçamento aberto com sondagem linear e sondagem quadrática_
+* Tabela hash com endereçamento aberto com sondagem linear e sondagem quadrática_
 
 ### Funções hash
 
@@ -42,7 +47,7 @@ $ sudo apt-get install cmake
 * Função de verificar qual é o número primo anterior menor do que n
 
 ### Fator de carga
-* Tamanho do vetor(N) será 1,3 * n, com n sendo o tamanho de entrada. Fator de carga = 0,7
+* Tamanho do vetor(N) será n / 0,7, com n sendo o tamanho de entrada. Fator de carga = 0,7
 * Testar com de 0,1-0,9 de 10 em 10
 * 
 

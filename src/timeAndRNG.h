@@ -13,8 +13,6 @@ const long RNG_MAX = INT16_MAX;
 // Negativos não são mais necessários
 const long RNG_MIN = 0;
 
-using namespace std;
-
 int geraNumeroRandomico();
 
 double getCurrentTimeInMillis();
