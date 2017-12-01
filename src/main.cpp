@@ -4,6 +4,9 @@
 #include <random>
 #include <chrono>
 #include <thread>
+#include <cstring>
+#include <iomanip>
+#include <stdlib.h>
 
 #include "timeAndRNG.h"
 
@@ -22,9 +25,30 @@ void printTimeDiff(double start, double end);
 
 void linear_insert();
 
+bool numeroEprimo(int n);
+
+int numeroPrimoAnterior(int n);
+
+int proximoPrimo(int n);
+
+int geraNumeroRandomico();
+
+void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo = 0);
+
+void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo = 0);
+
+int calculaHash(int chave, int tamanho);
+
+void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga);
+
+void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga);
+
+const int INVALID_ARRAY_VALUE = 0;
+const float LIMITE_FATOR_DE_CARGA = 0.1;
+
 /* Main */
 int main(int argc, char *argv[]) {
-    int n = 5000;
+    int n = 500;
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
 
@@ -36,14 +60,167 @@ int main(int argc, char *argv[]) {
 
     cout << "Gerando " << n << " números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
 
-    int *array = populateArrayWithRandomNumbers(n);
+    int *vetorNumerosAleatorios = populateArrayWithRandomNumbers(n);
 
-    linear_insert();
+    cout << "Números aleatórios gerados." << endl;
+
+    for (float i = 0.1; i <= LIMITE_FATOR_DE_CARGA; i += 0.1) {
+        insercaoLinear(vetorNumerosAleatorios, n, i);
+        insercaoQuadratica(vetorNumerosAleatorios, n, i);
+    }
 
     return 0;
 }
 
-/* Funções */
+void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga) {
+    cout << "****** Inserção Linear ******" << endl;
+
+    int tamanhoVetor = numeroItens + (int) ceil(numeroItens * fatorDeCarga);
+
+    cout << "Fator de carga: " << setprecision(2) << 1.0 - fatorDeCarga << endl;
+    cout << "Tamanho real do vetor: " << tamanhoVetor << endl;
+    cout << "Funcao Hash: Tamanho do vetor" << endl;
+
+    int *tabelaHash = new int[tamanhoVetor];
+
+    // Enche o vetor com 0
+    memset(tabelaHash, -1, sizeof(tabelaHash));
+
+    double start, end;
+    start = getCurrentTimeInMillis();
+    for (int j = 0; j < numeroItens; j++) {
+        hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor);
+    }
+    end = getCurrentTimeInMillis();
+    cout << "Tempos de inserção: " << endl;
+
+    free(tabelaHash);
+
+    printTimeDiff(start, end);
+    //TODO: print statistics
+
+    cout << "***********************" << endl;
+}
+
+void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga) {
+    cout << "****** Inserção Quadrática ******" << endl;
+
+    int tamanhoVetor = numeroItens + (int) ceil(numeroItens * fatorDeCarga);
+
+    cout << "Fator de carga: " << setprecision(2) << 1.0 - fatorDeCarga << endl;
+    cout << "Tamanho real do vetor: " << tamanhoVetor << endl;
+    cout << "Funcao Hash: Tamanho do vetor" << endl;
+
+    int *tabelaHash = new int[tamanhoVetor];
+
+    // Enche o vetor com 0
+    memset(tabelaHash, -1, sizeof(tabelaHash));
+
+    double start, end;
+    start = getCurrentTimeInMillis();
+    for (int j = 0; j < numeroItens; j++) {
+        hashInsereQuadratica(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor);
+    }
+    end = getCurrentTimeInMillis();
+    cout << "Tempos de inserção: " << endl;
+
+    free(tabelaHash);
+
+    printTimeDiff(start, end);
+    //TODO: print statistics
+
+    cout << "***********************" << endl;
+}
+
+/* Funções do Caio-Hash */
+
+void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo) {
+    int chave = calculaHash(abs(elemento), tamanhoVetorHash);
+    if (numeroPrimo != 0) {
+        int chave = calculaHash(elemento, numeroPrimo);
+    }
+
+    int posicao = chave;
+    for (int i = 1; i <= tamanhoVetorHash; i++) {
+        if (T[posicao] == INVALID_ARRAY_VALUE) {
+            T[posicao] = elemento;
+            //cout<<"Insercao:: posicao="<<posicao<<", elemento:"<<elemento<<endl;
+            return;
+        } else if (T[posicao] == elemento) {
+            cout << "Elemento repetido: " << elemento << endl;
+            cout << "Nao sera inserido!" << endl;
+            return;
+        }
+
+        // Percorre circular
+        posicao = (chave + i) % tamanhoVetorHash;
+    }
+
+    cout << "Percorrido n posicoes insercao invalida!" << endl;
+}
+
+void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo) {
+    int chave = calculaHash(abs(elemento), tamanhoVetorHash);
+    if (numeroPrimo != 0) {
+        int chave = calculaHash(elemento, numeroPrimo);
+    }
+
+    int posicao = chave;
+    unsigned int somaQuadratica = 0;
+    unsigned int incrementa = 1;
+    while (true) {
+        if(somaQuadratica != 0 && posicao == chave){
+            cout << "Deu uma volta" << endl;
+            return;
+        }
+        if (T[posicao] == INVALID_ARRAY_VALUE) {
+            T[posicao] = elemento;
+            //cout<<"Insercao:: posicao="<<posicao<<", elemento:"<<elemento<<endl;
+            return;
+        } else if (T[posicao] == elemento) {
+            cout << "Elemento repetido: " << elemento << ", não será inserido." << endl;
+            return;
+        } else {
+            somaQuadratica = incrementa * incrementa;
+            cout<<"Colisao: "<<somaQuadratica<<", i: "<<incrementa<<endl;
+            incrementa++;
+        }
+
+        // Percorre circular
+        posicao = (chave + somaQuadratica) % tamanhoVetorHash;
+    }
+}
+
+int geraNumeroRandomicoRand() {
+    return (rand() % INT32_MAX);
+}
+
+int calculaHash(int chave, int tamanho) {
+    return (chave % tamanho);
+}
+
+int numeroPrimoAnterior(int n) {
+    if (n < 2) {
+        return 1;
+    }
+
+    while (!numeroEprimo(--n)) {}
+    return n;
+}
+
+int proximoPrimo(int n) {
+    while (!numeroEprimo(++n)) {}
+    return n;
+}
+
+bool numeroEprimo(int n) {
+    for (int i = 2; i < n; i++) {
+        if (n % i == 0 && i != n) return false;
+    }
+    return true;
+}
+
+/* Funções de RNG */
 
 int *populateArrayWithRandomNumbers(int size) {
     int *array = new int[size];
