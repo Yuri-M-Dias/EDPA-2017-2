@@ -5,7 +5,7 @@
 
 Na linha de comando:
 
-``` shell
+```shell
 $ mkdir build && cd build
 $ cmake .. -G"CodeBlocks - Unix Makefiles"
 $ make
@@ -15,15 +15,16 @@ Para executar com um n padrão (5000).
 
 Para customizar o tamanho do n:
 
-``` shell
+```shell
 $ ./EDPA20172-hash.o 4020
 ```
 
-Nessa compilação, será gerado um .cbp na pasta `build/`, que pode ser importado como um projeto do CodeBlocks.
+Nessa compilação, será gerado um .cbp na pasta `build/`,
+ que pode ser importado como um projeto do CodeBlocks.
 
-## Para instalar o software necessário no Ubuntu
+## Para instalar o software necessário no Ubuntu/Debian
 
-``` bash
+```shell
 $ sudo apt-get install build-essential
 $ sudo apt-get install cmake
 ```
@@ -34,20 +35,45 @@ $ sudo apt-get install cmake
 * Wellington Galvão <@wgalvao>
 * Yuri Matheus <@Yuri-M-Dias>
 
-## Anotações de discussão
+## Objetivos do trabalho
 
-### Objetivos do trabalho
+**Foco**:
+Tabela hash com endereçamento aberto com sondagem linear e sondagem quadrática
 
-* Tabela hash com endereçamento aberto com sondagem linear e sondagem quadrática_
+**Partes do relatório**:
+1. quantidade de vezes que cada chave foi gerada;
+2. quantidade de chaves geradas iguais a chaves já presentes nas estruturas;
+3. tempo total de processamento (CPU) relativo à construção de cada estrutura;
+4. fator de carga (se for o caso);
+5. número de comparações de chaves em cada estrutura;
 
-### Funções hash
+## Anotações e discussões
 
-* Função de verificar qual é o próximo número primo maior do que n
-* Função que usa o tamanho do vetor
-* Função de verificar qual é o número primo anterior menor do que n
+**Notas**:
+* Deve aceitar elementos repetidos, porém não deve os inserir na estrutura,
+apenas contabilizando a inserção;
+* Fazer uma média das comparações necessárias para cada inserção;
+* Contar quantas colisões foram identificadas, antes de serem tratadas;
+* Vetor da hash não precisa ser dinâmico, pode ser declarado estaticamente
+vindo do valor de n fornecido.
+* Tamanho do vetor em relação ao fator de carga = (n / fator de carga)
+* Usar funções de hash diferentes 
+(Divisão? Multiplicação? Um relatório diferente para cada uma)
 
-### Fator de carga
-* Tamanho do vetor(N) será n / 0,7, com n sendo o tamanho de entrada. Fator de carga = 0,7
-* Testar com de 0,1-0,9 de 10 em 10
-* 
+## Estrutura do relatório
+
+**Máximo de 6 páginas! Manter os resultados sucintos!**
+
+* Apresentação, qual é o nosso problema, e como fizemos.
+* Resultados para um n qualquer grande (1.000.000.000?),
+de uma função hash simples, usando linear e quadrátrica.
+Mostrar as métricas/resultados obtidos para cada um deles.
+Qual fator de carga usar como padrão? "O melhor caso"(0.7)?
+* Testar para diferentes n grandes e pequenos, as duas estruturas,
+teste padrão/básico.
+* Manter o mesmo n grande, mas métricas com outros fatores de carga:
+0,1 - 0,9, para as duas estruturas.
+* Manter o n, mas funções de hash diferentes (divisão, multiplicação, bits...)
+Não é necessário, porém é interessante realizar os testes para os outros
+fatores de carga também.
 
