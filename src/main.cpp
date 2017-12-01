@@ -10,6 +10,10 @@
 #define INTERACTIVE false
 
 using namespace std;
+
+extern const long RNG_MAX;
+extern const long RNG_MIN;
+
 int tsize = 11;
 
 /* Definições */

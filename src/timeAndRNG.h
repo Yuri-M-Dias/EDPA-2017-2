@@ -9,9 +9,9 @@
 #include <climits>
 
 // Usando para não repetir INT_MAX e INT_MIN em todo lugar
-#define RNG_MAX INT16_MAX
+const long RNG_MAX = INT16_MAX;
 // Negativos não são mais necessários
-#define RNG_MIN 0
+const long RNG_MIN = 0;
 
 using namespace std;
 
