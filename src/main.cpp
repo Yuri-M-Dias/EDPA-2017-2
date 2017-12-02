@@ -18,10 +18,13 @@ int tsize = 11;
 
 /* Definições */
 
-struct estatisticas_chave {
+typedef struct EstatisticasChave {
     long colisoes;
-    bool ocupada;
-    int chave;
+    long quantidadeGerada;
+};
+
+typedef struct EstatisticasEstrutura {
+    long repetidos;
 };
 
 int *populateArrayWithRandomNumbers(int size);
@@ -38,7 +41,8 @@ int proximoPrimo(int n);
 
 int geraNumeroRandomico();
 
-void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo, estatisticas_chave *estatisticasChaves);
+void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo,
+                      EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura);
 
 void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo = 0);
 
@@ -98,33 +102,68 @@ void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeC
     int tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
     int *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
-    estatisticas_chave estatisticasChaves[tamanhoVetor];
+    EstatisticasChave estatisticasChaves[tamanhoVetor];
     for (int i = 0; i < tamanhoVetor; ++i) {
-        estatisticas_chave chave;
+        EstatisticasChave chave;
         chave.colisoes = 0;
+        chave.quantidadeGerada = 0;
         estatisticasChaves[i] = chave;
     }
+    EstatisticasEstrutura estatisticasEstrutura;
+    estatisticasEstrutura.repetidos = 0;
 
     double start, end;
     start = getCurrentTimeInMillis();
     for (int j = 0; j < numeroItens; j++) {
-        hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0, estatisticasChaves);
+        hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0,
+                         estatisticasChaves, estatisticasEstrutura);
     }
     end = getCurrentTimeInMillis();
-    cout << "Tempos de inserção: " << endl;
 
     delete[] tabelaHash;
 
     // Estatísticas
     printTimeDiff(start, end);
 
-    long totalColisoes = 0;
+    long totalColisoes = 0, quantidadeGerada = 0;
     for (int i = 0; i < tamanhoVetor; ++i) {
         totalColisoes += estatisticasChaves[i].colisoes;
+        quantidadeGerada += estatisticasChaves[i].quantidadeGerada;
     }
     cout << "Colisões na estrutura: " << totalColisoes << endl;
+    cout << "Quantidade de chaves geradas: " << quantidadeGerada << endl;
+    cout << "Número de chaves repetidas: " << estatisticasEstrutura.repetidos << endl;
 
     cout << "***********************" << endl;
+}
+
+void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo,
+                      EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura) {
+    int chave = calculaHash(abs(elemento), tamanhoVetorHash);
+    if (numeroPrimo != 0) {
+        int chave = calculaHash(elemento, numeroPrimo);
+    }
+    estatisticasChaves[chave].quantidadeGerada++;
+
+    int posicao = chave;
+    for (int i = 1; i <= tamanhoVetorHash; i++) {
+        if (T[posicao] == VALOR_FLAG_VAZIO) {
+            T[posicao] = elemento;
+            //cout<<"Insercao:: posicao="<<posicao<<", elemento:"<<elemento<<endl;
+            return;
+        } else if (T[posicao] == elemento) {
+            //cout << "Elemento repetido: " << elemento << ", não será inserido." << endl;
+            estatisticasEstrutura.repetidos++;
+            return;
+        }
+
+        // Ocorreu colisão
+        estatisticasChaves[posicao].colisoes++;
+        // Percorre circular
+        posicao = (chave + i) % tamanhoVetorHash;
+    }
+
+    cout << "Percorrido n posicoes insercao invalida!" << endl;
 }
 
 void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga) {
@@ -149,34 +188,6 @@ void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fato
     cout << "***********************" << endl;
 }
 
-/* Funções do Caio-Hash */
-
-void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo, estatisticas_chave estatisticasChaves[]) {
-    int chave = calculaHash(abs(elemento), tamanhoVetorHash);
-    if (numeroPrimo != 0) {
-        int chave = calculaHash(elemento, numeroPrimo);
-    }
-    estatisticasChaves[chave].colisoes++;
-
-    int posicao = chave;
-    for (int i = 1; i <= tamanhoVetorHash; i++) {
-        if (T[posicao] == VALOR_FLAG_VAZIO) {
-            T[posicao] = elemento;
-            //cout<<"Insercao:: posicao="<<posicao<<", elemento:"<<elemento<<endl;
-            return;
-        } else if (T[posicao] == elemento) {
-            //cout << "Elemento repetido: " << elemento << ", não será inserido." << endl;
-            return;
-        }
-
-        // Ocorreu colisão
-        estatisticasChaves[posicao].colisoes++;
-        // Percorre circular
-        posicao = (chave + i) % tamanhoVetorHash;
-    }
-
-    cout << "Percorrido n posicoes insercao invalida!" << endl;
-}
 
 void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo) {
     int chave = calculaHash(abs(elemento), tamanhoVetorHash);
