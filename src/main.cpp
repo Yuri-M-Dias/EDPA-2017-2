@@ -17,7 +17,6 @@
 #define INTERACTIVE false
 
 using namespace std;
-int tsize = 11;
 
 /* Definições */
 
@@ -76,97 +75,138 @@ void printTimeDiff(double start, double end) {
 
 /* HASHING - LINEAR AND QUADRATIC PROBING */
 
-int myHash(int key) {
+int tamanhoArray(float fatorCarga, int n){
+    float j = (fatorCarga - 1) * (-1);
+    float x = n*(j*n);
+    int resul = ceil(x);
+
+    if (resul < n)
+        return n + resul;
+    return  resul;
+}
+
+
+int hashFunction(int key, int tsize) {
     int i;
     i = key % tsize;
     return i;
 }
 
 //-------Sondagem Linear-------
-int linear_hash(int key) {
+int hashLinear(int key, int tsize) {
     int i;
     i = (key + 1) % tsize;
     return i;
 }
 
 //-------Sondagem Quadrática-------
-int squad_hash(int key, int j) {
+int hashQuadratico(int key, int j, int tsize) {
     int i;
     i = (key + (j * j)) % tsize;
     return i;
 }
 
-void linear_insert() {
-    int hash_array[11];
-    int hash_value;
-    int elem_array[] = {7, 36, 18, 62};
+
+void insertLinear() {
+    //defifindo o valor de hash
+    int hashValue;
+    //criando um vetor com valores conhecidos
+    std::vector<int> elem_array {7, 36, 18, 62};
     int key;
 
-    for (int l = 0; l < 11; l++) {
-        hash_array[l] = -1;
+    //definindo os valores de cargas de exemplo
+    float fatorCarga_1 = 0.1;
+    //float fatorCarga_2 = 0.5;
+    float fatorCarga_2 = 0.36;
+    float fatorCarga_3 = 0.7;
+    float fatorCarga_4 = 0.9;
+    //Recebe o tamanho do novo vetor mediante o fator de carga escolhido
+    int sizeArray = tamanhoArray(fatorCarga_2, elem_array.size());
+
+    cout << "Tamanho do Vetor mediante Fator de Carga = "  << fatorCarga_2 <<  " : " << sizeArray << endl;
+    //criando o vetor de hash com o tamanho informado
+    int hashArray[sizeArray];
+    //preencendo os valore do vetor com -1 o que indica que ele está vazio
+    for (int l = 0; l < sizeArray; l++) {
+        hashArray[l] = -1;
     }
-    //exemplo 1 n = m
-    //total de elementos n = 7
-    int n = 4;
+    //contador de consisões
+    int colision = 0;
+    int n = elem_array.size();
     for (int k = 0; k < n; k++) {
         key = elem_array[k];
-        hash_value = myHash(key);
-        while (hash_array[hash_value] != -1) {
-            hash_value = linear_hash(hash_value);
-
+        hashValue = hashFunction(key, sizeArray);
+        while (hashArray[hashValue] != -1) {
+            hashValue = hashLinear(hashValue, sizeArray);
         }
-        hash_array[hash_value] = key;
+        hashArray[hashValue] = key;
+        //Contadtor de colisões
+        if(hashArray[k] != -1){
+            colision++;
+        }
     }
-    cout << "Mostrando os elementos do hash_array" << endl;
-    for (int i = 0; i < 11; i++) {
-        cout << "Elemento na posição " << i << ": " << hash_array[i] << endl;
-        //printf("\n  Element at position %d: %d",i,hash_array[i]);
+    cout << "Mostrando os elementos do hashArray" << endl;
+    for (int i = 0; i < sizeArray; i++) {
+        cout << "Elemento na posição " << i << ": " << hashArray[i] << endl;
     }
+
+    float mediaColisoes = (float)colision/(float)elem_array.size();
+    cout << "\nColisões encontradas " << colision << endl;
+    cout << "\nColisões em relação a N = " << mediaColisoes * 100 << "%"<< endl;
 }
 
-void squad_insert() {
-    int hash_array[7];
-    int hash_value;
-    int elem_array[] = {50, 700, 76, 85, 92, 73, 101};
-    int key, j;
+void insertQuadratico() {
+    int hashValue;
+    std::vector<int> elem_array {7, 36, 18, 62};
+    int key;
 
-    for (int l = 0; l < 7; l++) {
-        hash_array[l] = -1;
+    float fatorCarga_1 = 0.1;
+    //float fatorCarga_2 = 0.5;
+    float fatorCarga_2 = 0.36;
+    float fatorCarga_3 = 0.7;
+    float fatorCarga_4 = 0.9;
+
+    int sizeArray = tamanhoArray(fatorCarga_2, elem_array.size());
+
+    cout << "Tamanho do Vetor mediante Fator de Carga = "  << fatorCarga_2 <<  " : " << sizeArray << endl;
+
+    int hashArray[sizeArray];
+
+    for (int l = 0; l < sizeArray; l++) {
+        hashArray[l] = -1;
     }
-    //exemplo 1 n = m
-    //total de elementos n = 7
-    int n = 7;
+
+    int n = elem_array.size();
+    int colision = 0;
+    int j = 0;
     for (int k = 0; k < n; k++) {
         j = 1;
         key = elem_array[k];
-        hash_value = myHash(key);
-        while (hash_array[hash_value] != -1) {
-            hash_value = squad_hash(hash_value, j);
+        hashValue = hashFunction(key, sizeArray);
+        while (hashArray[hashValue] != -1) {
+            hashValue = hashQuadratico(hashValue, j, sizeArray);
             j++;
         }
-        hash_array[hash_value] = key;
+        hashArray[hashValue] = key;
+        //Contadtor de colisões
+        if(hashArray[k] != -1){
+            colision++;
+        }
     }
     cout << "Mostrando os elementos do hash_array" << endl;
-    for (int i = 0; i < 7; i++) {
-        cout << "Elemento na posição " << i << ": " << hash_array[i] << endl;
-        //printf("\n  Element at position %d: %d",i,hash_array[i]);
+    for (int i = 0; i < sizeArray; i++) {
+        cout << "Elemento na posição " << i << ": " << hashArray[i] << endl;
     }
+
+    float mediaColisoes = (float)colision/(float)elem_array.size();
+    cout << "\nColisões encontradas " << colision << endl;
+    cout << "\nColisões em relação a N = " << mediaColisoes * 100 << "%"<< endl;
 }
 
 int main() {
-    int n;
-#if INTERACTIVE
-    cout << "Insira o valor de n:" << endl;
-    cin >> n;
-#else
-    n = 5000;
-#endif
-    cout << "n = " << n << endl;
-    cout << "Gerando números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
 
-    int *array = populateArrayWithRandomNumbers(n);
-
-    linear_insert();
+    insertLinear();
+    //insertQuadratico();
 
     return 0;
 }
