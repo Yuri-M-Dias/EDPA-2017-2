@@ -6,7 +6,6 @@
 #include <thread>
 #include <cstring>
 #include <iomanip>
-#include <stdlib.h>
 
 #include "timeAndRNG.h"
 
@@ -18,6 +17,12 @@ extern const long RNG_MIN;
 int tsize = 11;
 
 /* Definições */
+
+struct estatisticas_chave {
+    long colisoes;
+    bool ocupada;
+    int chave;
+};
 
 int *populateArrayWithRandomNumbers(int size);
 
@@ -33,7 +38,7 @@ int proximoPrimo(int n);
 
 int geraNumeroRandomico();
 
-void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo = 0);
+void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo, estatisticas_chave *estatisticasChaves);
 
 void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo = 0);
 
@@ -48,7 +53,7 @@ const float LIMITE_FATOR_DE_CARGA = 0.7;
 
 /* Main */
 int main(int argc, char *argv[]) {
-    int n = 10000;
+    int n = 1000;
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
 
@@ -64,22 +69,22 @@ int main(int argc, char *argv[]) {
 
     cout << "Números aleatórios gerados." << endl;
 
-    for (float i = 0.1; i <= LIMITE_FATOR_DE_CARGA; i += 0.1) {
-        insercaoLinear(vetorNumerosAleatorios, n, i);
-        insercaoQuadratica(vetorNumerosAleatorios, n, i);
+    for (float fatorDeCarga = 0.1; fatorDeCarga <= LIMITE_FATOR_DE_CARGA; fatorDeCarga += 0.1) {
+        insercaoLinear(vetorNumerosAleatorios, n, fatorDeCarga);
+        insercaoQuadratica(vetorNumerosAleatorios, n, fatorDeCarga);
     }
 
     return 0;
 }
 
-int calculaTamanhoVetor(int numeroItens, float fatorDeCarga){
+int calculaTamanhoVetor(int numeroItens, float fatorDeCarga) {
     int tamanhoVetor = numeroItens + (int) ceil(numeroItens * fatorDeCarga);
     cout << "Fator de carga: " << setprecision(2) << 1.0 - fatorDeCarga << endl;
     cout << "Tamanho real do vetor: " << tamanhoVetor << endl;
     return tamanhoVetor;
 }
 
-int* criaVetorTabelaHash(int tamanhoVetor) {
+int *criaVetorTabelaHash(int tamanhoVetor) {
     int *tabelaHash = new int[tamanhoVetor];
 
     // Enche o vetor com VAZIO
@@ -93,18 +98,31 @@ void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeC
     int tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
     int *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
+    estatisticas_chave estatisticasChaves[tamanhoVetor];
+    for (int i = 0; i < tamanhoVetor; ++i) {
+        estatisticas_chave chave;
+        chave.colisoes = 0;
+        estatisticasChaves[i] = chave;
+    }
+
     double start, end;
     start = getCurrentTimeInMillis();
     for (int j = 0; j < numeroItens; j++) {
-        hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor);
+        hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0, estatisticasChaves);
     }
     end = getCurrentTimeInMillis();
     cout << "Tempos de inserção: " << endl;
 
-    free(tabelaHash);
+    delete[] tabelaHash;
 
+    // Estatísticas
     printTimeDiff(start, end);
-    //TODO: print statistics
+
+    long totalColisoes = 0;
+    for (int i = 0; i < tamanhoVetor; ++i) {
+        totalColisoes += estatisticasChaves[i].colisoes;
+    }
+    cout << "Colisões na estrutura: " << totalColisoes << endl;
 
     cout << "***********************" << endl;
 }
@@ -123,7 +141,7 @@ void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fato
     end = getCurrentTimeInMillis();
     cout << "Tempos de inserção: " << endl;
 
-    free(tabelaHash);
+    delete[] tabelaHash;
 
     printTimeDiff(start, end);
     //TODO: print statistics
@@ -133,11 +151,12 @@ void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fato
 
 /* Funções do Caio-Hash */
 
-void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo) {
+void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo, estatisticas_chave estatisticasChaves[]) {
     int chave = calculaHash(abs(elemento), tamanhoVetorHash);
     if (numeroPrimo != 0) {
         int chave = calculaHash(elemento, numeroPrimo);
     }
+    estatisticasChaves[chave].colisoes++;
 
     int posicao = chave;
     for (int i = 1; i <= tamanhoVetorHash; i++) {
@@ -150,6 +169,8 @@ void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrim
             return;
         }
 
+        // Ocorreu colisão
+        estatisticasChaves[posicao].colisoes++;
         // Percorre circular
         posicao = (chave + i) % tamanhoVetorHash;
     }
@@ -167,8 +188,7 @@ void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numero
     unsigned int somaQuadratica = 0;
     unsigned int incrementa = 1;
     while (true) {
-        //TODO: TERMINAR!!!!
-        if(somaQuadratica != 0 && posicao == chave){
+        if (somaQuadratica != 0 && posicao == chave) {
             cout << "Deu uma volta" << endl;
             return;
         }
