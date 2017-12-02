@@ -52,10 +52,13 @@ void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeC
 
 void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga);
 
+void insertLinear();
+
+/* Main */
+
 const int VALOR_FLAG_VAZIO = -1;
 const float LIMITE_FATOR_DE_CARGA = 0.7;
 
-/* Main */
 int main(int argc, char *argv[]) {
     int n = 1000;
     if (argc < 2) {
@@ -72,6 +75,9 @@ int main(int argc, char *argv[]) {
     int *vetorNumerosAleatorios = populateArrayWithRandomNumbers(n);
 
     cout << "Números aleatórios gerados." << endl;
+
+    // Do Wellington
+    //insertLinear();
 
     for (float fatorDeCarga = 0.1; fatorDeCarga <= LIMITE_FATOR_DE_CARGA; fatorDeCarga += 0.1) {
         insercaoLinear(vetorNumerosAleatorios, n, fatorDeCarga);
@@ -404,12 +410,4 @@ void insertQuadratico() {
     float mediaColisoes = (float)colision/(float)elem_array.size();
     cout << "\nColisões encontradas " << colision << endl;
     cout << "\nColisões em relação a N = " << mediaColisoes * 100 << "%"<< endl;
-}
-
-int main() {
-
-    insertLinear();
-    //insertQuadratico();
-
-    return 0;
 }
