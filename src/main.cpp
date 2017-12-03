@@ -26,6 +26,8 @@ typedef struct EstatisticasChave {
 typedef struct EstatisticasEstrutura {
     long repetidos;
     long comparacoes;
+    // Apenas ocorre na quadrática
+    long falhas;
 };
 
 int *populateArrayWithRandomNumbers(int size);
@@ -62,7 +64,7 @@ const int VALOR_FLAG_VAZIO = -1;
 const float LIMITE_FATOR_DE_CARGA = 0.7;
 
 int main(int argc, char *argv[]) {
-    int n = 1000;
+    int n = 20000;
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
 
@@ -111,10 +113,12 @@ void printEstatisticas(EstatisticasChave estatisticasChaves[],
         totalColisoes += estatisticasChaves[i].colisoes;
         quantidadeGerada += estatisticasChaves[i].quantidadeGerada;
     }
+
     cout << "Colisões na estrutura: " << totalColisoes << endl;
     cout << "Quantidade de chaves geradas: " << quantidadeGerada << endl;
     cout << "Número de chaves repetidas: " << estatisticasEstrutura.repetidos << endl;
     cout << "Número de comparações na estrutura: " << estatisticasEstrutura.comparacoes << endl;
+    cout << "Número de falhas de inserção na estrutura: " << estatisticasEstrutura.falhas << endl;
     double mediaColisoes = ((double) totalColisoes / (double) tamanhoVetor) * 100;
     cout << "Média de colisões: " << std::setprecision(4) << mediaColisoes << endl;
 
@@ -124,6 +128,7 @@ EstatisticasEstrutura criaEstatisticasEstrutura() {
     EstatisticasEstrutura estatisticasEstrutura;
     estatisticasEstrutura.repetidos = 0;
     estatisticasEstrutura.comparacoes = 0;
+    estatisticasEstrutura.falhas = 0;
     return estatisticasEstrutura;
 }
 
@@ -237,6 +242,7 @@ void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numero
         estatisticasEstrutura.comparacoes++;
         if (somaQuadratica != 0 && posicao == chave) {
             // Código deu uma volta
+            estatisticasEstrutura.falhas++;
             return;
         }
         if (T[posicao] == VALOR_FLAG_VAZIO) {
