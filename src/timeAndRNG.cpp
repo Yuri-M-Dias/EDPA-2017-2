@@ -14,8 +14,14 @@ int geraNumeroRandomico() {
 }
 
 double getCurrentTimeInMillis() {
-    return chrono::duration_cast<chrono::milliseconds>(
-            chrono::steady_clock::now().time_since_epoch()
+    return chrono::duration_cast<chrono::nanoseconds>(
+            chrono::high_resolution_clock::now().time_since_epoch()
+    ).count();
+}
+
+double getCurrentTimeInNanos() {
+    return chrono::duration_cast<chrono::nanoseconds>(
+            chrono::high_resolution_clock::now().time_since_epoch()
     ).count();
 }
 

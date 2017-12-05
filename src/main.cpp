@@ -19,18 +19,18 @@ int tsize = 11;
 /* Definições */
 
 typedef struct EstatisticasChave {
-    long colisoes;
-    long quantidadeGerada;
+    unsigned long colisoes;
+    unsigned long quantidadeGerada;
 };
 
 typedef struct EstatisticasEstrutura {
-    long repetidos;
-    long comparacoes;
+    unsigned long repetidos;
+    unsigned long comparacoes;
     // Apenas ocorre na quadrática
-    long falhas;
+    unsigned long falhas;
 };
 
-int *populateArrayWithRandomNumbers(int size);
+unsigned long * populateArrayWithRandomNumbers(unsigned long size);
 
 void printTimeDiff(double start, double end);
 
@@ -44,17 +44,17 @@ int proximoPrimo(int n);
 
 int geraNumeroRandomico();
 
-void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo,
+void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
                       EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura);
 
-void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo,
+void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
                           EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura);
 
 int calculaHash(int chave, int tamanho);
 
-void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga);
+void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga);
 
-void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga);
+void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga);
 
 void insertLinear();
 
@@ -64,7 +64,7 @@ const int VALOR_FLAG_VAZIO = -1;
 const float LIMITE_FATOR_DE_CARGA = 0.7;
 
 int main(int argc, char *argv[]) {
-    int n = 20000;
+    unsigned long n = 21000;
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
     cout << "Gerando " << n << " números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
 
-    int *vetorNumerosAleatorios = populateArrayWithRandomNumbers(n);
+    unsigned long * vetorNumerosAleatorios = populateArrayWithRandomNumbers(n);
 
     cout << "Números aleatórios gerados." << endl;
 
@@ -91,15 +91,15 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-int calculaTamanhoVetor(int numeroItens, float fatorDeCarga) {
-    int tamanhoVetor = numeroItens + (int) ceil(numeroItens * fatorDeCarga);
+unsigned long calculaTamanhoVetor(unsigned long numeroItens, float fatorDeCarga) {
+    unsigned long tamanhoVetor = numeroItens + (int) ceil(numeroItens * fatorDeCarga);
     cout << "Fator de carga: " << setprecision(2) << 1.0 - fatorDeCarga << endl;
     cout << "Tamanho real do vetor: " << tamanhoVetor << endl;
     return tamanhoVetor;
 }
 
-int *criaVetorTabelaHash(int tamanhoVetor) {
-    int *tabelaHash = new int[tamanhoVetor];
+unsigned long *criaVetorTabelaHash(unsigned long tamanhoVetor) {
+    unsigned long *tabelaHash = new unsigned long[tamanhoVetor];
 
     // Enche o vetor com VAZIO
     memset(tabelaHash, VALOR_FLAG_VAZIO, tamanhoVetor * sizeof(tabelaHash[0]));
@@ -107,9 +107,9 @@ int *criaVetorTabelaHash(int tamanhoVetor) {
 }
 
 void printEstatisticas(EstatisticasChave estatisticasChaves[],
-                       EstatisticasEstrutura estatisticasEstrutura, int tamanhoVetor) {
+                       EstatisticasEstrutura estatisticasEstrutura, unsigned long tamanhoVetor) {
     long totalColisoes = 0, quantidadeGerada = 0;
-    for (int i = 0; i < tamanhoVetor; ++i) {
+    for (unsigned long i = 0; i < tamanhoVetor; ++i) {
         totalColisoes += estatisticasChaves[i].colisoes;
         quantidadeGerada += estatisticasChaves[i].quantidadeGerada;
     }
@@ -132,14 +132,14 @@ EstatisticasEstrutura criaEstatisticasEstrutura() {
     return estatisticasEstrutura;
 }
 
-void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga) {
+void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga) {
     cout << "****** Inserção Linear ******" << endl;
 
-    int tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
-    int *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
+    unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
+    unsigned long *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
     EstatisticasChave estatisticasChaves[tamanhoVetor];
-    for (int i = 0; i < tamanhoVetor; ++i) {
+    for (unsigned long i = 0; i < tamanhoVetor; ++i) {
         EstatisticasChave chave;
         chave.colisoes = 0;
         chave.quantidadeGerada = 0;
@@ -149,7 +149,7 @@ void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeC
 
     double start, end;
     start = getCurrentTimeInMillis();
-    for (int j = 0; j < numeroItens; j++) {
+    for (unsigned long j = 0; j < numeroItens; j++) {
         hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0,
                          estatisticasChaves, estatisticasEstrutura);
     }
@@ -164,7 +164,7 @@ void insercaoLinear(int *vetorNumerosAleatorios, int numeroItens, float fatorDeC
     cout << "***********************" << endl;
 }
 
-void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo,
+void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
                       EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura) {
     int chave = calculaHash(abs(elemento), tamanhoVetorHash);
     if (numeroPrimo != 0) {
@@ -173,7 +173,7 @@ void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrim
     estatisticasChaves[chave].quantidadeGerada++;
 
     int posicao = chave;
-    for (int i = 1; i <= tamanhoVetorHash; i++) {
+    for (unsigned long i = 1; i <= tamanhoVetorHash; i++) {
         estatisticasEstrutura.comparacoes++;
         if (T[posicao] == VALOR_FLAG_VAZIO) {
             T[posicao] = elemento;
@@ -194,14 +194,14 @@ void hashInsereLinear(int elemento, int *T, int tamanhoVetorHash, int numeroPrim
     cout << "Percorrido n posicoes insercao invalida!" << endl;
 }
 
-void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fatorDeCarga) {
+void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga) {
     cout << "****** Inserção Quadrática ******" << endl;
 
-    int tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
-    int *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
+    unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
+    unsigned long *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
     EstatisticasChave estatisticasChaves[tamanhoVetor];
-    for (int i = 0; i < tamanhoVetor; ++i) {
+    for (unsigned long i = 0; i < tamanhoVetor; ++i) {
         EstatisticasChave chave;
         chave.colisoes = 0;
         chave.quantidadeGerada = 0;
@@ -211,7 +211,7 @@ void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fato
 
     double start, end;
     start = getCurrentTimeInMillis();
-    for (int j = 0; j < numeroItens; j++) {
+    for (unsigned long j = 0; j < numeroItens; j++) {
         hashInsereQuadratica(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0,
                              estatisticasChaves, estatisticasEstrutura);
     }
@@ -227,7 +227,7 @@ void insercaoQuadratica(int *vetorNumerosAleatorios, int numeroItens, float fato
 }
 
 
-void hashInsereQuadratica(int elemento, int *T, int tamanhoVetorHash, int numeroPrimo,
+void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
                           EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura) {
     int chave = calculaHash(abs(elemento), tamanhoVetorHash);
     if (numeroPrimo != 0) {
@@ -294,12 +294,12 @@ bool numeroEprimo(int n) {
 
 /* Funções de RNG */
 
-int *populateArrayWithRandomNumbers(int size) {
-    int *array = new int[size];
+unsigned long * populateArrayWithRandomNumbers(unsigned long size) {
+    unsigned long *array = new unsigned long[size];
 
     double start = getCurrentTimeInMillis();
 
-    for (int i = 0; i < size; i++) {
+    for (unsigned long i = 0; i < size; i++) {
         int r = geraNumeroRandomico();
         array[i] = r;
     }
@@ -315,11 +315,11 @@ void printTimeDiff(double start, double end) {
         return;
     }
     double diff = end - start;
-    double millisecondsTotal = diff;
-    double secondsTotal = diff * chrono::milliseconds::period::num /
-                          chrono::milliseconds::period::den;
+    double nanosecondsTotal = diff;
+    double secondsTotal = diff * chrono::nanoseconds::period::num /
+                          chrono::nanoseconds::period::den;
 
-    cout << "Execução: " << millisecondsTotal << "ms, " << secondsTotal << "s" << endl;
+    cout << "Execução: " << setprecision(4) << nanosecondsTotal << "ns, " << secondsTotal << "s" << endl;
 }
 
 /* HASHING - LINEAR AND QUADRATIC PROBING */
