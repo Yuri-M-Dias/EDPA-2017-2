@@ -19,11 +19,20 @@ int tsize = 11;
 /* Definições */
 
 typedef struct EstatisticasChave {
+    EstatisticasChave() {
+        this->quantidadeGerada = 0;
+        this->colisoes = 0;
+    };
     unsigned long colisoes;
     unsigned long quantidadeGerada;
 };
 
 typedef struct EstatisticasEstrutura {
+    EstatisticasEstrutura() {
+        this->repetidos = 0;
+        this->comparacoes = 0;
+        this->falhas = 0;
+    };
     unsigned long repetidos;
     unsigned long comparacoes;
     // Apenas ocorre na quadrática
@@ -45,10 +54,10 @@ int proximoPrimo(int n);
 int geraNumeroRandomico();
 
 void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
-                      EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura);
+                      EstatisticasChave *estatisticasChaves, EstatisticasEstrutura &estatisticasEstrutura);
 
 void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
-                          EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura);
+                          EstatisticasChave *estatisticasChaves, EstatisticasEstrutura &estatisticasEstrutura);
 
 int calculaHash(int chave, int tamanho);
 
@@ -61,10 +70,10 @@ void insertLinear();
 /* Main */
 
 const int VALOR_FLAG_VAZIO = -1;
-const float LIMITE_FATOR_DE_CARGA = 0.7;
+const float LIMITE_FATOR_DE_CARGA = 1;
 
 int main(int argc, char *argv[]) {
-    unsigned long n = 21000;
+    unsigned long n = 100000;
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
 
@@ -83,7 +92,7 @@ int main(int argc, char *argv[]) {
     // Do Wellington
     //insertLinear();
 
-    for (float fatorDeCarga = 0.1; fatorDeCarga <= LIMITE_FATOR_DE_CARGA; fatorDeCarga += 0.1) {
+    for (float fatorDeCarga = 0.0; fatorDeCarga <= LIMITE_FATOR_DE_CARGA; fatorDeCarga += 0.1) {
         insercaoLinear(vetorNumerosAleatorios, n, fatorDeCarga);
         insercaoQuadratica(vetorNumerosAleatorios, n, fatorDeCarga);
     }
@@ -106,10 +115,10 @@ unsigned long *criaVetorTabelaHash(unsigned long tamanhoVetor) {
     return tabelaHash;
 }
 
-void printEstatisticas(EstatisticasChave estatisticasChaves[],
+void printEstatisticas(EstatisticasChave *estatisticasChaves,
                        EstatisticasEstrutura estatisticasEstrutura, unsigned long tamanhoVetor) {
-    long totalColisoes = 0, quantidadeGerada = 0;
-    for (unsigned long i = 0; i < tamanhoVetor; ++i) {
+    unsigned long totalColisoes = 0, quantidadeGerada = 0;
+    for (unsigned long i = 0; i < tamanhoVetor; i++) {
         totalColisoes += estatisticasChaves[i].colisoes;
         quantidadeGerada += estatisticasChaves[i].quantidadeGerada;
     }
@@ -125,11 +134,18 @@ void printEstatisticas(EstatisticasChave estatisticasChaves[],
 
 }
 
+EstatisticasChave *criaVetorEstatisticasChave(unsigned long tamanhoVetor) {
+    EstatisticasChave *estatisticasChaves = new EstatisticasChave[tamanhoVetor];
+
+    for (unsigned long i = 0; i < tamanhoVetor; i++) {
+        EstatisticasChave chave;
+        estatisticasChaves[i] = chave;
+    }
+    return estatisticasChaves;
+}
+
 EstatisticasEstrutura criaEstatisticasEstrutura() {
     EstatisticasEstrutura estatisticasEstrutura;
-    estatisticasEstrutura.repetidos = 0;
-    estatisticasEstrutura.comparacoes = 0;
-    estatisticasEstrutura.falhas = 0;
     return estatisticasEstrutura;
 }
 
@@ -139,13 +155,7 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
     unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
     unsigned long *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
-    EstatisticasChave estatisticasChaves[tamanhoVetor];
-    for (unsigned long i = 0; i < tamanhoVetor; ++i) {
-        EstatisticasChave chave;
-        chave.colisoes = 0;
-        chave.quantidadeGerada = 0;
-        estatisticasChaves[i] = chave;
-    }
+    EstatisticasChave *estatisticasChaves = criaVetorEstatisticasChave(tamanhoVetor);
     EstatisticasEstrutura estatisticasEstrutura = criaEstatisticasEstrutura();
 
     double start, end;
@@ -166,7 +176,7 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
 }
 
 void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
-                      EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura) {
+                      EstatisticasChave *estatisticasChaves, EstatisticasEstrutura &estatisticasEstrutura) {
     int chave = calculaHash(abs(elemento), tamanhoVetorHash);
     if (numeroPrimo != 0) {
         int chave = calculaHash(elemento, numeroPrimo);
@@ -192,7 +202,8 @@ void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetor
         posicao = (chave + i) % tamanhoVetorHash;
     }
 
-    cout << "Percorrido n posicoes insercao invalida!" << endl;
+    //Ocorreu algum erro na inserção
+    estatisticasEstrutura.falhas++;
 }
 
 void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga) {
@@ -201,13 +212,7 @@ void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long num
     unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
     unsigned long *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
-    EstatisticasChave estatisticasChaves[tamanhoVetor];
-    for (unsigned long i = 0; i < tamanhoVetor; ++i) {
-        EstatisticasChave chave;
-        chave.colisoes = 0;
-        chave.quantidadeGerada = 0;
-        estatisticasChaves[i] = chave;
-    }
+    EstatisticasChave *estatisticasChaves = criaVetorEstatisticasChave(tamanhoVetor);
     EstatisticasEstrutura estatisticasEstrutura = criaEstatisticasEstrutura();
 
     double start, end;
@@ -229,7 +234,7 @@ void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long num
 
 
 void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
-                          EstatisticasChave estatisticasChaves[], EstatisticasEstrutura &estatisticasEstrutura) {
+                          EstatisticasChave *estatisticasChaves, EstatisticasEstrutura &estatisticasEstrutura) {
     int chave = calculaHash(abs(elemento), tamanhoVetorHash);
     if (numeroPrimo != 0) {
         int chave = calculaHash(elemento, numeroPrimo);
@@ -318,9 +323,9 @@ void printTimeDiff(double start, double end) {
     double diff = end - start;
     double microsecondsTotal = diff;
     double secondsTotal = diff * chrono::microseconds::period::num /
-                               chrono::microseconds::period::den;
+                          chrono::microseconds::period::den;
     double millisecondsTotal = diff * chrono::milliseconds::period::num /
-                          chrono::milliseconds::period::den;
+                               chrono::milliseconds::period::den;
 
     cout << "Execução: " << setprecision(4);
     cout << microsecondsTotal << "μs, ";

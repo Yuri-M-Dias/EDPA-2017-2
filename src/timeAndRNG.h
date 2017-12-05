@@ -9,7 +9,7 @@
 #include <climits>
 
 // Usando para não repetir INT_MAX e INT_MIN em todo lugar
-const long RNG_MAX = INT16_MAX;
+const long RNG_MAX = INT64_MAX;
 // Negativos não são mais necessários
 const long RNG_MIN = 0;
 
