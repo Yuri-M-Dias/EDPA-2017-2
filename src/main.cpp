@@ -30,7 +30,7 @@ typedef struct EstatisticasEstrutura {
     unsigned long falhas;
 };
 
-unsigned long * populateArrayWithRandomNumbers(unsigned long size);
+unsigned long *populateArrayWithRandomNumbers(unsigned long size);
 
 void printTimeDiff(double start, double end);
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
     cout << "Gerando " << n << " números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
 
-    unsigned long * vetorNumerosAleatorios = populateArrayWithRandomNumbers(n);
+    unsigned long *vetorNumerosAleatorios = populateArrayWithRandomNumbers(n);
 
     cout << "Números aleatórios gerados." << endl;
 
@@ -114,13 +114,14 @@ void printEstatisticas(EstatisticasChave estatisticasChaves[],
         quantidadeGerada += estatisticasChaves[i].quantidadeGerada;
     }
 
+    cout << std::setprecision(4);
     cout << "Colisões na estrutura: " << totalColisoes << endl;
     cout << "Quantidade de chaves geradas: " << quantidadeGerada << endl;
     cout << "Número de chaves repetidas: " << estatisticasEstrutura.repetidos << endl;
     cout << "Número de comparações na estrutura: " << estatisticasEstrutura.comparacoes << endl;
     cout << "Número de falhas de inserção na estrutura: " << estatisticasEstrutura.falhas << endl;
     double mediaColisoes = ((double) totalColisoes / (double) tamanhoVetor) * 100;
-    cout << "Média de colisões: " << std::setprecision(4) << mediaColisoes << endl;
+    cout << "Média de colisões: " << mediaColisoes << endl;
 
 }
 
@@ -148,12 +149,12 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
     EstatisticasEstrutura estatisticasEstrutura = criaEstatisticasEstrutura();
 
     double start, end;
-    start = getCurrentTimeInMillis();
+    start = getCurrentTime();
     for (unsigned long j = 0; j < numeroItens; j++) {
         hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0,
                          estatisticasChaves, estatisticasEstrutura);
     }
-    end = getCurrentTimeInMillis();
+    end = getCurrentTime();
 
     delete[] tabelaHash;
 
@@ -210,12 +211,12 @@ void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long num
     EstatisticasEstrutura estatisticasEstrutura = criaEstatisticasEstrutura();
 
     double start, end;
-    start = getCurrentTimeInMillis();
+    start = getCurrentTime();
     for (unsigned long j = 0; j < numeroItens; j++) {
         hashInsereQuadratica(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0,
                              estatisticasChaves, estatisticasEstrutura);
     }
-    end = getCurrentTimeInMillis();
+    end = getCurrentTime();
     cout << "Tempos de inserção: " << endl;
 
     delete[] tabelaHash;
@@ -294,17 +295,17 @@ bool numeroEprimo(int n) {
 
 /* Funções de RNG */
 
-unsigned long * populateArrayWithRandomNumbers(unsigned long size) {
+unsigned long *populateArrayWithRandomNumbers(unsigned long size) {
     unsigned long *array = new unsigned long[size];
 
-    double start = getCurrentTimeInMillis();
+    double start = getCurrentTime();
 
     for (unsigned long i = 0; i < size; i++) {
         int r = geraNumeroRandomico();
         array[i] = r;
     }
 
-    double end = getCurrentTimeInMillis();
+    double end = getCurrentTime();
     printTimeDiff(start, end);
 
     return array;
@@ -315,11 +316,17 @@ void printTimeDiff(double start, double end) {
         return;
     }
     double diff = end - start;
-    double nanosecondsTotal = diff;
-    double secondsTotal = diff * chrono::nanoseconds::period::num /
-                          chrono::nanoseconds::period::den;
+    double microsecondsTotal = diff;
+    double secondsTotal = diff * chrono::microseconds::period::num /
+                               chrono::microseconds::period::den;
+    double millisecondsTotal = diff * chrono::milliseconds::period::num /
+                          chrono::milliseconds::period::den;
 
-    cout << "Execução: " << setprecision(4) << nanosecondsTotal << "ns, " << secondsTotal << "s" << endl;
+    cout << "Execução: " << setprecision(4);
+    cout << microsecondsTotal << "μs, ";
+    cout << millisecondsTotal << "ms, ";
+    cout << secondsTotal << "s";
+    cout << endl;
 }
 
 /* HASHING - LINEAR AND QUADRATIC PROBING */

@@ -15,6 +15,6 @@ const long RNG_MIN = 0;
 
 int geraNumeroRandomico();
 
-double getCurrentTimeInMillis();
+double getCurrentTime();
 
 #endif //EDPA20172_TIMEANDRNGFUNCTIONS_H
