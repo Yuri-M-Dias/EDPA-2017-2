@@ -61,9 +61,11 @@ void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoV
 
 int calculaHash(int chave, int tamanho);
 
-void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga);
+void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga,
+                    bool usarProxPrimo = false);
 
-void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga);
+void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga,
+                        bool usarProxPrimo = false);
 
 void insertLinear();
 
@@ -76,9 +78,7 @@ int main(int argc, char *argv[]) {
     unsigned long n = 100000;
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
-
-//        cout << "Insira o valor de n:" << endl;
-//        cin >> n;
+        cerr << "Usando n com valor padrão: " << n << "" << endl;
     } else {
         n = stoi(argv[1]);
     }
@@ -95,6 +95,8 @@ int main(int argc, char *argv[]) {
     for (float fatorDeCarga = 0.0; fatorDeCarga <= LIMITE_FATOR_DE_CARGA; fatorDeCarga += 0.1) {
         insercaoLinear(vetorNumerosAleatorios, n, fatorDeCarga);
         insercaoQuadratica(vetorNumerosAleatorios, n, fatorDeCarga);
+        insercaoLinear(vetorNumerosAleatorios, n, fatorDeCarga, true);
+        insercaoQuadratica(vetorNumerosAleatorios, n, fatorDeCarga, true);
     }
 
     return 0;
@@ -149,10 +151,20 @@ EstatisticasEstrutura criaEstatisticasEstrutura() {
     return estatisticasEstrutura;
 }
 
-void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga) {
+void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga,
+                    bool usarProxPrimo) {
     cout << "****** Inserção Linear ******" << endl;
 
     unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
+
+    if (usarProxPrimo) {
+        unsigned long numeroAnterior = tamanhoVetor;
+        tamanhoVetor = proximoPrimo(tamanhoVetor);
+        cout << "Utilizando primo " << tamanhoVetor << " ao invés " << numeroAnterior << endl;
+        double fatorDeCargaReal = (double) (tamanhoVetor - numeroItens) /  numeroItens;
+        cout << "Fator de carga real: " << fatorDeCargaReal << endl;
+    }
+
     unsigned long *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
     EstatisticasChave *estatisticasChaves = criaVetorEstatisticasChave(tamanhoVetor);
@@ -206,10 +218,20 @@ void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetor
     estatisticasEstrutura.falhas++;
 }
 
-void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga) {
+void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga,
+                        bool usarProxPrimo) {
     cout << "****** Inserção Quadrática ******" << endl;
 
     unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
+
+    if (usarProxPrimo) {
+        unsigned long numeroAnterior = tamanhoVetor;
+        tamanhoVetor = proximoPrimo(tamanhoVetor);
+        cout << "Utilizando primo " << tamanhoVetor << " ao invés " << numeroAnterior << endl;
+        double fatorDeCargaReal = (double) (tamanhoVetor - numeroItens) /  numeroItens;
+        cout << "Fator de carga real: " << fatorDeCargaReal << endl;
+    }
+
     unsigned long *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
 
     EstatisticasChave *estatisticasChaves = criaVetorEstatisticasChave(tamanhoVetor);
@@ -222,7 +244,6 @@ void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long num
                              estatisticasChaves, estatisticasEstrutura);
     }
     end = getCurrentTime();
-    cout << "Tempos de inserção: " << endl;
 
     delete[] tabelaHash;
 
