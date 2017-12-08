@@ -161,7 +161,7 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
         unsigned long numeroAnterior = tamanhoVetor;
         tamanhoVetor = proximoPrimo(tamanhoVetor);
         cout << "Utilizando primo " << tamanhoVetor << " ao invés " << numeroAnterior << endl;
-        double fatorDeCargaReal = (double) (tamanhoVetor - numeroItens) /  numeroItens;
+        double fatorDeCargaReal = 1.0 - ((double) (tamanhoVetor - numeroItens) /  numeroItens);
         cout << "Fator de carga real: " << fatorDeCargaReal << endl;
     }
 
@@ -228,7 +228,7 @@ void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long num
         unsigned long numeroAnterior = tamanhoVetor;
         tamanhoVetor = proximoPrimo(tamanhoVetor);
         cout << "Utilizando primo " << tamanhoVetor << " ao invés " << numeroAnterior << endl;
-        double fatorDeCargaReal = (double) (tamanhoVetor - numeroItens) /  numeroItens;
+        double fatorDeCargaReal = 1.0 - ((double) (tamanhoVetor - numeroItens) /  numeroItens);
         cout << "Fator de carga real: " << fatorDeCargaReal << endl;
     }
 
