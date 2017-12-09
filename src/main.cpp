@@ -14,8 +14,6 @@ using namespace std;
 extern const long RNG_MAX;
 extern const long RNG_MIN;
 
-int tsize = 11;
-
 /* Definições */
 
 typedef struct EstatisticasChave {
@@ -43,20 +41,16 @@ unsigned long *populateArrayWithRandomNumbers(unsigned long size);
 
 void printTimeDiff(double start, double end);
 
-void linear_insert();
-
 bool numeroEprimo(int n);
-
-int numeroPrimoAnterior(int n);
 
 int proximoPrimo(int n);
 
 int geraNumeroRandomico();
 
-void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
+void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetorHash,
                       EstatisticasChave *estatisticasChaves, EstatisticasEstrutura &estatisticasEstrutura);
 
-void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
+void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoVetorHash,
                           EstatisticasChave *estatisticasChaves, EstatisticasEstrutura &estatisticasEstrutura);
 
 int calculaHash(int chave, int tamanho);
@@ -67,7 +61,7 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
 void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga,
                         bool usarProxPrimo = false);
 
-void insertLinear();
+unsigned long calculaTamanhoVetorUsandoProxNumeroPrimo(unsigned long numeroItens, unsigned long tamanhoVetor);
 
 /* Main */
 
@@ -76,6 +70,9 @@ const float LIMITE_FATOR_DE_CARGA = 1;
 
 int main(int argc, char *argv[]) {
     unsigned long n = 100000;
+
+    cout << setprecision(10);
+
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
         cerr << "Usando n com valor padrão: " << n << "" << endl;
@@ -88,9 +85,6 @@ int main(int argc, char *argv[]) {
     unsigned long *vetorNumerosAleatorios = populateArrayWithRandomNumbers(n);
 
     cout << "Números aleatórios gerados." << endl;
-
-    // Do Wellington
-    //insertLinear();
 
     for (float fatorDeCarga = 0.0; fatorDeCarga <= LIMITE_FATOR_DE_CARGA; fatorDeCarga += 0.1) {
         insercaoLinear(vetorNumerosAleatorios, n, fatorDeCarga);
@@ -109,6 +103,14 @@ unsigned long calculaTamanhoVetor(unsigned long numeroItens, float fatorDeCarga)
     return tamanhoVetor;
 }
 
+unsigned long calculaTamanhoVetorUsandoProxNumeroPrimo(unsigned long numeroItens, unsigned long tamanhoVetor) {
+    unsigned long novoTamanhoVetor = proximoPrimo(tamanhoVetor);
+    cout << "Utilizando primo " << novoTamanhoVetor << " ao invés  de " << tamanhoVetor << endl;
+    double fatorDeCargaReal = 1.0 - ((double) (novoTamanhoVetor - numeroItens) / numeroItens);
+    cout << "Fator de carga real: " << fatorDeCargaReal << endl;
+    return novoTamanhoVetor;
+}
+
 unsigned long *criaVetorTabelaHash(unsigned long tamanhoVetor) {
     unsigned long *tabelaHash = new unsigned long[tamanhoVetor];
 
@@ -125,7 +127,7 @@ void printEstatisticas(EstatisticasChave *estatisticasChaves,
         quantidadeGerada += estatisticasChaves[i].quantidadeGerada;
     }
 
-    cout << std::setprecision(4);
+    cout << std::setprecision(10);
     cout << "Colisões na estrutura: " << totalColisoes << endl;
     cout << "Quantidade de chaves geradas: " << quantidadeGerada << endl;
     cout << "Número de chaves repetidas: " << estatisticasEstrutura.repetidos << endl;
@@ -133,7 +135,6 @@ void printEstatisticas(EstatisticasChave *estatisticasChaves,
     cout << "Número de falhas de inserção na estrutura: " << estatisticasEstrutura.falhas << endl;
     double mediaColisoes = ((double) totalColisoes / (double) tamanhoVetor) * 100;
     cout << "Média de colisões: " << mediaColisoes << endl;
-
 }
 
 EstatisticasChave *criaVetorEstatisticasChave(unsigned long tamanhoVetor) {
@@ -158,11 +159,7 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
     unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
 
     if (usarProxPrimo) {
-        unsigned long numeroAnterior = tamanhoVetor;
-        tamanhoVetor = proximoPrimo(tamanhoVetor);
-        cout << "Utilizando primo " << tamanhoVetor << " ao invés " << numeroAnterior << endl;
-        double fatorDeCargaReal = 1.0 - ((double) (tamanhoVetor - numeroItens) /  numeroItens);
-        cout << "Fator de carga real: " << fatorDeCargaReal << endl;
+        tamanhoVetor = calculaTamanhoVetorUsandoProxNumeroPrimo(numeroItens, tamanhoVetor);
     }
 
     unsigned long *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
@@ -173,7 +170,7 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
     double start, end;
     start = getCurrentTime();
     for (unsigned long j = 0; j < numeroItens; j++) {
-        hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0,
+        hashInsereLinear(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor,
                          estatisticasChaves, estatisticasEstrutura);
     }
     end = getCurrentTime();
@@ -187,12 +184,9 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
     cout << "***********************" << endl;
 }
 
-void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
+void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetorHash,
                       EstatisticasChave *estatisticasChaves, EstatisticasEstrutura &estatisticasEstrutura) {
     int chave = calculaHash(abs(elemento), tamanhoVetorHash);
-    if (numeroPrimo != 0) {
-        int chave = calculaHash(elemento, numeroPrimo);
-    }
     estatisticasChaves[chave].quantidadeGerada++;
 
     int posicao = chave;
@@ -225,11 +219,7 @@ void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long num
     unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
 
     if (usarProxPrimo) {
-        unsigned long numeroAnterior = tamanhoVetor;
-        tamanhoVetor = proximoPrimo(tamanhoVetor);
-        cout << "Utilizando primo " << tamanhoVetor << " ao invés " << numeroAnterior << endl;
-        double fatorDeCargaReal = 1.0 - ((double) (tamanhoVetor - numeroItens) /  numeroItens);
-        cout << "Fator de carga real: " << fatorDeCargaReal << endl;
+        tamanhoVetor = calculaTamanhoVetorUsandoProxNumeroPrimo(numeroItens, tamanhoVetor);
     }
 
     unsigned long *tabelaHash = criaVetorTabelaHash(tamanhoVetor);
@@ -240,7 +230,7 @@ void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long num
     double start, end;
     start = getCurrentTime();
     for (unsigned long j = 0; j < numeroItens; j++) {
-        hashInsereQuadratica(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor, 0,
+        hashInsereQuadratica(vetorNumerosAleatorios[j], tabelaHash, tamanhoVetor,
                              estatisticasChaves, estatisticasEstrutura);
     }
     end = getCurrentTime();
@@ -254,12 +244,9 @@ void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long num
 }
 
 
-void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoVetorHash, int numeroPrimo,
+void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoVetorHash,
                           EstatisticasChave *estatisticasChaves, EstatisticasEstrutura &estatisticasEstrutura) {
     int chave = calculaHash(abs(elemento), tamanhoVetorHash);
-    if (numeroPrimo != 0) {
-        int chave = calculaHash(elemento, numeroPrimo);
-    }
 
     estatisticasChaves[chave].quantidadeGerada++;
     int posicao = chave;
@@ -296,15 +283,6 @@ void hashInsereQuadratica(int elemento, unsigned long *T, unsigned long tamanhoV
 
 int calculaHash(int chave, int tamanho) {
     return (chave % tamanho);
-}
-
-int numeroPrimoAnterior(int n) {
-    if (n < 2) {
-        return 1;
-    }
-
-    while (!numeroEprimo(--n)) {}
-    return n;
 }
 
 int proximoPrimo(int n) {
@@ -348,139 +326,10 @@ void printTimeDiff(double start, double end) {
     double millisecondsTotal = diff * chrono::milliseconds::period::num /
                                chrono::milliseconds::period::den;
 
-    cout << "Execução: " << setprecision(4);
+    cout << "Execução: " << setprecision(10);
     cout << microsecondsTotal << "μs, ";
     cout << millisecondsTotal << "ms, ";
     cout << secondsTotal << "s";
     cout << endl;
 }
 
-/* HASHING - LINEAR AND QUADRATIC PROBING */
-
-int tamanhoArray(float fatorCarga, int n) {
-    float j = (fatorCarga - 1) * (-1);
-    float x = n * (j * n);
-    int resul = ceil(x);
-
-    if (resul < n)
-        return n + resul;
-    return resul;
-}
-
-
-int hashFunction(int key, int tsize) {
-    int i;
-    i = key % tsize;
-    return i;
-}
-
-//-------Sondagem Linear-------
-int hashLinear(int key, int tsize) {
-    int i;
-    i = (key + 1) % tsize;
-    return i;
-}
-
-//-------Sondagem Quadrática-------
-int hashQuadratico(int key, int j, int tsize) {
-    int i;
-    i = (key + (j * j)) % tsize;
-    return i;
-}
-
-
-void insertLinear() {
-    //defifindo o valor de hash
-    int hashValue;
-    //criando um vetor com valores conhecidos
-    std::vector<int> elem_array{7, 36, 18, 62};
-    int key;
-
-    //definindo os valores de cargas de exemplo
-    float fatorCarga_1 = 0.1;
-    //float fatorCarga_2 = 0.5;
-    float fatorCarga_2 = 0.36;
-    float fatorCarga_3 = 0.7;
-    float fatorCarga_4 = 0.9;
-    //Recebe o tamanho do novo vetor mediante o fator de carga escolhido
-    int sizeArray = tamanhoArray(fatorCarga_2, elem_array.size());
-
-    cout << "Tamanho do Vetor mediante Fator de Carga = " << fatorCarga_2 << " : " << sizeArray << endl;
-    //criando o vetor de hash com o tamanho informado
-    int hashArray[sizeArray];
-    //preencendo os valore do vetor com -1 o que indica que ele está vazio
-    for (int l = 0; l < sizeArray; l++) {
-        hashArray[l] = -1;
-    }
-    //contador de consisões
-    int colision = 0;
-    int n = elem_array.size();
-    for (int k = 0; k < n; k++) {
-        key = elem_array[k];
-        hashValue = hashFunction(key, sizeArray);
-        while (hashArray[hashValue] != -1) {
-            hashValue = hashLinear(hashValue, sizeArray);
-        }
-        hashArray[hashValue] = key;
-        //Contadtor de colisões
-        if (hashArray[k] != -1) {
-            colision++;
-        }
-    }
-    cout << "Mostrando os elementos do hashArray" << endl;
-    for (int i = 0; i < sizeArray; i++) {
-        cout << "Elemento na posição " << i << ": " << hashArray[i] << endl;
-    }
-
-    float mediaColisoes = (float) colision / (float) elem_array.size();
-    cout << "\nColisões encontradas " << colision << endl;
-    cout << "\nColisões em relação a N = " << mediaColisoes * 100 << "%" << endl;
-}
-
-void insertQuadratico() {
-    int hashValue;
-    std::vector<int> elem_array{7, 36, 18, 62};
-    int key;
-
-    float fatorCarga_1 = 0.1;
-    //float fatorCarga_2 = 0.5;
-    float fatorCarga_2 = 0.36;
-    float fatorCarga_3 = 0.7;
-    float fatorCarga_4 = 0.9;
-
-    int sizeArray = tamanhoArray(fatorCarga_2, elem_array.size());
-
-    cout << "Tamanho do Vetor mediante Fator de Carga = " << fatorCarga_2 << " : " << sizeArray << endl;
-
-    int hashArray[sizeArray];
-
-    for (int l = 0; l < sizeArray; l++) {
-        hashArray[l] = -1;
-    }
-
-    int n = elem_array.size();
-    int colision = 0;
-    int j = 0;
-    for (int k = 0; k < n; k++) {
-        j = 1;
-        key = elem_array[k];
-        hashValue = hashFunction(key, sizeArray);
-        while (hashArray[hashValue] != -1) {
-            hashValue = hashQuadratico(hashValue, j, sizeArray);
-            j++;
-        }
-        hashArray[hashValue] = key;
-        //Contadtor de colisões
-        if (hashArray[k] != -1) {
-            colision++;
-        }
-    }
-    cout << "Mostrando os elementos do hash_array" << endl;
-    for (int i = 0; i < sizeArray; i++) {
-        cout << "Elemento na posição " << i << ": " << hashArray[i] << endl;
-    }
-
-    float mediaColisoes = (float) colision / (float) elem_array.size();
-    cout << "\nColisões encontradas " << colision << endl;
-    cout << "\nColisões em relação a N = " << mediaColisoes * 100 << "%" << endl;
-}
