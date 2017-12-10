@@ -16,7 +16,7 @@ extern const long RNG_MIN;
 
 /* Definições */
 
-typedef struct EstatisticasChave {
+struct EstatisticasChave {
     EstatisticasChave() {
         this->quantidadeGerada = 0;
         this->colisoes = 0;
@@ -25,7 +25,7 @@ typedef struct EstatisticasChave {
     unsigned long quantidadeGerada;
 };
 
-typedef struct EstatisticasEstrutura {
+struct EstatisticasEstrutura {
     EstatisticasEstrutura() {
         this->repetidos = 0;
         this->comparacoes = 0;
