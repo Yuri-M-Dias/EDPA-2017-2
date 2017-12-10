@@ -69,22 +69,22 @@ const int VALOR_FLAG_VAZIO = -1;
 const float LIMITE_FATOR_DE_CARGA = 1;
 
 int main(int argc, char *argv[]) {
-    unsigned long n = 100000;
+    unsigned long n = 10000000;
 
     cout << setprecision(10);
 
     if (argc < 2) {
         cerr << "Uso: " << argv[0] << " <tamanho do n>" << endl;
-        cerr << "Usando n com valor padrão: " << n << "" << endl;
+        cerr << "Usando n com valor padrao: " << n << "" << endl;
     } else {
         n = stoi(argv[1]);
     }
 
-    cout << "Gerando " << n << " números aleatórios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
+    cout << "Gerando " << n << " numeros aleatorios entre [" << RNG_MIN << "] e [" << RNG_MAX << "]" << endl;
 
     unsigned long *vetorNumerosAleatorios = populateArrayWithRandomNumbers(n);
 
-    cout << "Números aleatórios gerados." << endl;
+    cout << "Numeros aleatórios gerados." << endl;
 
     for (float fatorDeCarga = 0.0; fatorDeCarga <= LIMITE_FATOR_DE_CARGA; fatorDeCarga += 0.1) {
         insercaoLinear(vetorNumerosAleatorios, n, fatorDeCarga);
@@ -128,13 +128,15 @@ void printEstatisticas(EstatisticasChave *estatisticasChaves,
     }
 
     cout << std::setprecision(10);
-    cout << "Colisões na estrutura: " << totalColisoes << endl;
-    cout << "Quantidade de chaves geradas: " << quantidadeGerada << endl;
-    cout << "Número de chaves repetidas: " << estatisticasEstrutura.repetidos << endl;
-    cout << "Número de comparações na estrutura: " << estatisticasEstrutura.comparacoes << endl;
-    cout << "Número de falhas de inserção na estrutura: " << estatisticasEstrutura.falhas << endl;
+    cout << "Colisoes na estrutura: " << totalColisoes << endl;
+//    cout << "Quantidade de chaves geradas: " << quantidadeGerada << endl;
+    cout << "Numero de chaves repetidas: " << estatisticasEstrutura.repetidos << endl;
+    cout << "Numero de comparacoes na estrutura: " << estatisticasEstrutura.comparacoes << endl;
+    cout << "Numero de falhas de insercao na estrutura: " << estatisticasEstrutura.falhas << endl;
     double mediaColisoes = ((double) totalColisoes / (double) tamanhoVetor) * 100;
-    cout << "Média de colisões: " << mediaColisoes << endl;
+    cout << "Media de colisoes: " << mediaColisoes << endl;
+    double mediaComparacoes = ((double) estatisticasEstrutura.comparacoes / (double) tamanhoVetor) * 100;
+    cout << "Media de comparacoes: " << mediaComparacoes << endl;
 }
 
 EstatisticasChave *criaVetorEstatisticasChave(unsigned long tamanhoVetor) {
@@ -154,7 +156,7 @@ EstatisticasEstrutura criaEstatisticasEstrutura() {
 
 void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga,
                     bool usarProxPrimo) {
-    cout << "****** Inserção Linear ******" << endl;
+    cout << "****** Insercao Linear ******" << endl;
 
     unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
 
@@ -177,7 +179,7 @@ void insercaoLinear(unsigned long *vetorNumerosAleatorios, unsigned long numeroI
 
     delete[] tabelaHash;
 
-    // Estatísticas
+    // Estatisticas
     printTimeDiff(start, end);
     printEstatisticas(estatisticasChaves, estatisticasEstrutura, tamanhoVetor);
 
@@ -202,7 +204,7 @@ void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetor
             return;
         }
 
-        // Ocorreu colisão
+        // Ocorreu colisao
         estatisticasChaves[posicao].colisoes++;
         // Percorre circular
         posicao = (chave + i) % tamanhoVetorHash;
@@ -214,7 +216,7 @@ void hashInsereLinear(int elemento, unsigned long *T, unsigned long tamanhoVetor
 
 void insercaoQuadratica(unsigned long *vetorNumerosAleatorios, unsigned long numeroItens, float fatorDeCarga,
                         bool usarProxPrimo) {
-    cout << "****** Inserção Quadrática ******" << endl;
+    cout << "****** Inserção Quadratica ******" << endl;
 
     unsigned long tamanhoVetor = calculaTamanhoVetor(numeroItens, fatorDeCarga);
 
@@ -326,7 +328,7 @@ void printTimeDiff(double start, double end) {
     double millisecondsTotal = diff * chrono::milliseconds::period::num /
                                chrono::milliseconds::period::den;
 
-    cout << "Execução: " << setprecision(10);
+    cout << "Execucao: " << setprecision(10);
     cout << microsecondsTotal << "μs, ";
     cout << millisecondsTotal << "ms, ";
     cout << secondsTotal << "s";
