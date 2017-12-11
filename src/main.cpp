@@ -69,7 +69,7 @@ const int VALOR_FLAG_VAZIO = -1;
 const float LIMITE_FATOR_DE_CARGA = 1;
 
 int main(int argc, char *argv[]) {
-    unsigned long n = 1000000;
+    unsigned long n = 100000;
 
     cout << setprecision(10);
 
@@ -129,14 +129,16 @@ void printEstatisticas(EstatisticasChave *estatisticasChaves,
 
     cout << std::setprecision(10);
     cout << "Colisoes na estrutura: " << totalColisoes << endl;
-//    cout << "Quantidade de chaves geradas: " << quantidadeGerada << endl;
-    cout << "Numero de chaves repetidas: " << estatisticasEstrutura.repetidos << endl;
-    cout << "Numero de comparacoes na estrutura: " << estatisticasEstrutura.comparacoes << endl;
-    cout << "Numero de falhas de insercao na estrutura: " << estatisticasEstrutura.falhas << endl;
     double mediaColisoes = ((double) totalColisoes / (double) tamanhoVetor) * 100;
     cout << "Media de colisoes: " << mediaColisoes << endl;
+
+    cout << "Numero de comparacoes na estrutura: " << estatisticasEstrutura.comparacoes << endl;
     double mediaComparacoes = ((double) estatisticasEstrutura.comparacoes / (double) tamanhoVetor) * 100;
     cout << "Media de comparacoes: " << mediaComparacoes << endl;
+
+    cout << "Numero de falhas de insercao na estrutura: " << estatisticasEstrutura.falhas << endl;
+//    cout << "Quantidade de chaves geradas: " << quantidadeGerada << endl;
+    cout << "Numero de chaves repetidas: " << estatisticasEstrutura.repetidos << endl;
 }
 
 EstatisticasChave *criaVetorEstatisticasChave(unsigned long tamanhoVetor) {
@@ -329,9 +331,9 @@ void printTimeDiff(double start, double end) {
                                chrono::milliseconds::period::den;
 
     cout << "Execucao: " << setprecision(10);
-    cout << microsecondsTotal << "μs, ";
+    //cout << microsecondsTotal << "μs, ";
     cout << millisecondsTotal << "ms, ";
-    cout << secondsTotal << "s";
+    //cout << secondsTotal << "s";
     cout << endl;
 }
 
