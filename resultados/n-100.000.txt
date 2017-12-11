@@ -1,0 +1,483 @@
+Gerando 100000 numeros aleatorios entre [0] e [9223372036854775807]
+Execucao: 6620.485ms, 
+Numeros aleatórios gerados.
+****** Insercao Linear ******
+Fator de carga: 1
+Tamanho real do vetor: 100000
+Execucao: 1618.455ms, 
+Colisoes na estrutura: 21082613
+Media de colisoes: 21082.613
+Numero de comparacoes na estrutura: 21182613
+Media de comparacoes: 21182.613
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 1
+Tamanho real do vetor: 100000
+Execucao: 130.905ms, 
+Colisoes na estrutura: 679569
+Media de colisoes: 679.569
+Numero de comparacoes na estrutura: 779569
+Media de comparacoes: 779.569
+Numero de falhas de insercao na estrutura: 75
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 1
+Tamanho real do vetor: 100000
+Utilizando primo 100003 ao invés  de 100000
+Fator de carga real: 1
+Execucao: 1385.283ms, 
+Colisoes na estrutura: 18505175
+Media de colisoes: 18504.61986
+Numero de comparacoes na estrutura: 18605175
+Media de comparacoes: 18604.61686
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 1
+Tamanho real do vetor: 100000
+Utilizando primo 100003 ao invés  de 100000
+Fator de carga real: 1
+Execucao: 94.631ms, 
+Colisoes na estrutura: 952119
+Media de colisoes: 952.0904373
+Numero de comparacoes na estrutura: 1052119
+Media de comparacoes: 1052.087437
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.9
+Tamanho real do vetor: 110000
+Execucao: 50.054ms, 
+Colisoes na estrutura: 518913
+Media de colisoes: 471.7390909
+Numero de comparacoes na estrutura: 618913
+Media de comparacoes: 562.6481818
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.9
+Tamanho real do vetor: 110000
+Execucao: 30.083ms, 
+Colisoes na estrutura: 189442
+Media de colisoes: 172.22
+Numero de comparacoes na estrutura: 289442
+Media de comparacoes: 263.1290909
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.9
+Tamanho real do vetor: 110000
+Utilizando primo 110017 ao invés  de 110000
+Fator de carga real: 0.9
+Execucao: 58.557ms, 
+Colisoes na estrutura: 503776
+Media de colisoes: 457.9074143
+Numero de comparacoes na estrutura: 603776
+Media de comparacoes: 548.8024578
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.9
+Tamanho real do vetor: 110000
+Utilizando primo 110017 ao invés  de 110000
+Fator de carga real: 0.9
+Execucao: 51.285ms, 
+Colisoes na estrutura: 188697
+Media de colisoes: 171.5162202
+Numero de comparacoes na estrutura: 288697
+Media de comparacoes: 262.4112637
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.8
+Tamanho real do vetor: 120000
+Execucao: 46.376ms, 
+Colisoes na estrutura: 242235
+Media de colisoes: 201.8625
+Numero de comparacoes na estrutura: 342235
+Media de comparacoes: 285.1958333
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.8
+Tamanho real do vetor: 120000
+Execucao: 46.018ms, 
+Colisoes na estrutura: 131233
+Media de colisoes: 109.3608333
+Numero de comparacoes na estrutura: 231233
+Media de comparacoes: 192.6941667
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.8
+Tamanho real do vetor: 120000
+Utilizando primo 120011 ao invés  de 120000
+Fator de carga real: 0.8
+Execucao: 45.659ms, 
+Colisoes na estrutura: 248769
+Media de colisoes: 207.2884986
+Numero de comparacoes na estrutura: 348769
+Media de comparacoes: 290.6141937
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.8
+Tamanho real do vetor: 120000
+Utilizando primo 120011 ao invés  de 120000
+Fator de carga real: 0.8
+Execucao: 43.473ms, 
+Colisoes na estrutura: 129511
+Media de colisoes: 107.915941
+Numero de comparacoes na estrutura: 229511
+Media de comparacoes: 191.2416362
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.7
+Tamanho real do vetor: 130001
+Execucao: 38.542ms, 
+Colisoes na estrutura: 168675
+Media de colisoes: 129.7490019
+Numero de comparacoes na estrutura: 268675
+Media de comparacoes: 206.6714871
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.7
+Tamanho real do vetor: 130001
+Execucao: 31.675ms, 
+Colisoes na estrutura: 103885
+Media de colisoes: 79.91092376
+Numero de comparacoes na estrutura: 203885
+Media de comparacoes: 156.833409
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.7
+Tamanho real do vetor: 130001
+Utilizando primo 130003 ao invés  de 130001
+Fator de carga real: 0.7
+Execucao: 39.943ms, 
+Colisoes na estrutura: 165990
+Media de colisoes: 127.6816689
+Numero de comparacoes na estrutura: 265990
+Media de comparacoes: 204.6029707
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.7
+Tamanho real do vetor: 130001
+Utilizando primo 130003 ao invés  de 130001
+Fator de carga real: 0.7
+Execucao: 36.078ms, 
+Colisoes na estrutura: 103710
+Media de colisoes: 79.77508211
+Numero de comparacoes na estrutura: 203710
+Media de comparacoes: 156.6963839
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.6
+Tamanho real do vetor: 140000
+Execucao: 33.131ms, 
+Colisoes na estrutura: 125346
+Media de colisoes: 89.53285714
+Numero de comparacoes na estrutura: 225346
+Media de comparacoes: 160.9614286
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.6
+Tamanho real do vetor: 140000
+Execucao: 32.356ms, 
+Colisoes na estrutura: 86023
+Media de colisoes: 61.445
+Numero de comparacoes na estrutura: 186023
+Media de comparacoes: 132.8735714
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.6
+Tamanho real do vetor: 140000
+Utilizando primo 140009 ao invés  de 140000
+Fator de carga real: 0.6
+Execucao: 34.737ms, 
+Colisoes na estrutura: 124763
+Media de colisoes: 89.11070003
+Numero de comparacoes na estrutura: 224763
+Media de comparacoes: 160.5346799
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.6
+Tamanho real do vetor: 140000
+Utilizando primo 140009 ao invés  de 140000
+Fator de carga real: 0.6
+Execucao: 36.493ms, 
+Colisoes na estrutura: 86403
+Media de colisoes: 61.71246134
+Numero de comparacoes na estrutura: 186403
+Media de comparacoes: 133.1364412
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.5
+Tamanho real do vetor: 150000
+Execucao: 25.214ms, 
+Colisoes na estrutura: 99789
+Media de colisoes: 66.526
+Numero de comparacoes na estrutura: 199789
+Media de comparacoes: 133.1926667
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.5
+Tamanho real do vetor: 150000
+Execucao: 34.798ms, 
+Colisoes na estrutura: 73306
+Media de colisoes: 48.87066667
+Numero de comparacoes na estrutura: 173306
+Media de comparacoes: 115.5373333
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.5
+Tamanho real do vetor: 150000
+Utilizando primo 150001 ao invés  de 150000
+Fator de carga real: 0.5
+Execucao: 25.499ms, 
+Colisoes na estrutura: 98610
+Media de colisoes: 65.73956174
+Numero de comparacoes na estrutura: 198610
+Media de comparacoes: 132.405784
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.5
+Tamanho real do vetor: 150000
+Utilizando primo 150001 ao invés  de 150000
+Fator de carga real: 0.5
+Execucao: 20.837ms, 
+Colisoes na estrutura: 73401
+Media de colisoes: 48.93367378
+Numero de comparacoes na estrutura: 173401
+Media de comparacoes: 115.599896
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.4
+Tamanho real do vetor: 160001
+Execucao: 22.163ms, 
+Colisoes na estrutura: 83086
+Media de colisoes: 51.92842545
+Numero de comparacoes na estrutura: 183086
+Media de comparacoes: 114.4280348
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.4
+Tamanho real do vetor: 160001
+Execucao: 21.29ms, 
+Colisoes na estrutura: 63897
+Media de colisoes: 39.9353754
+Numero de comparacoes na estrutura: 163897
+Media de comparacoes: 102.4349848
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.4
+Tamanho real do vetor: 160001
+Utilizando primo 160009 ao invés  de 160001
+Fator de carga real: 0.4
+Execucao: 19.49ms, 
+Colisoes na estrutura: 82914
+Media de colisoes: 51.81833522
+Numero de comparacoes na estrutura: 182914
+Media de comparacoes: 114.3148198
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.4
+Tamanho real do vetor: 160001
+Utilizando primo 160009 ao invés  de 160001
+Fator de carga real: 0.4
+Execucao: 21.677ms, 
+Colisoes na estrutura: 63846
+Media de colisoes: 39.90150554
+Numero de comparacoes na estrutura: 163846
+Media de comparacoes: 102.3979901
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.3
+Tamanho real do vetor: 170001
+Execucao: 26.586ms, 
+Colisoes na estrutura: 70433
+Media de colisoes: 41.43093276
+Numero de comparacoes na estrutura: 170433
+Media de comparacoes: 100.2541162
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.3
+Tamanho real do vetor: 170001
+Execucao: 33.713ms, 
+Colisoes na estrutura: 56785
+Media de colisoes: 33.40274469
+Numero de comparacoes na estrutura: 156785
+Media de comparacoes: 92.22592808
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.3
+Tamanho real do vetor: 170001
+Utilizando primo 170003 ao invés  de 170001
+Fator de carga real: 0.3
+Execucao: 32.272ms, 
+Colisoes na estrutura: 70867
+Media de colisoes: 41.68573496
+Numero de comparacoes na estrutura: 170867
+Media de comparacoes: 100.5082263
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.3
+Tamanho real do vetor: 170001
+Utilizando primo 170003 ao invés  de 170001
+Fator de carga real: 0.3
+Execucao: 33.352ms, 
+Colisoes na estrutura: 57170
+Media de colisoes: 33.62881831
+Numero de comparacoes na estrutura: 157170
+Media de comparacoes: 92.45130968
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.2
+Tamanho real do vetor: 180001
+Execucao: 67.125ms, 
+Colisoes na estrutura: 63362
+Media de colisoes: 35.20091555
+Numero de comparacoes na estrutura: 163362
+Media de comparacoes: 90.75616247
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.2
+Tamanho real do vetor: 180001
+Execucao: 32.207ms, 
+Colisoes na estrutura: 52023
+Media de colisoes: 28.9015061
+Numero de comparacoes na estrutura: 152023
+Media de comparacoes: 84.45675302
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.2
+Tamanho real do vetor: 180001
+Utilizando primo 180007 ao invés  de 180001
+Fator de carga real: 0.2
+Execucao: 29.178ms, 
+Colisoes na estrutura: 62181
+Media de colisoes: 34.54365664
+Numero de comparacoes na estrutura: 162181
+Media de comparacoes: 90.09705178
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.2
+Tamanho real do vetor: 180001
+Utilizando primo 180007 ao invés  de 180001
+Fator de carga real: 0.2
+Execucao: 20.128ms, 
+Colisoes na estrutura: 51299
+Media de colisoes: 28.49833618
+Numero de comparacoes na estrutura: 151299
+Media de comparacoes: 84.05173132
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.1
+Tamanho real do vetor: 190001
+Execucao: 17.476ms, 
+Colisoes na estrutura: 55110
+Media de colisoes: 29.0051105
+Numero de comparacoes na estrutura: 155110
+Media de comparacoes: 81.63641244
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.1
+Tamanho real do vetor: 190001
+Execucao: 19.173ms, 
+Colisoes na estrutura: 46982
+Media de colisoes: 24.72723828
+Numero de comparacoes na estrutura: 146982
+Media de comparacoes: 77.35854022
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Insercao Linear ******
+Fator de carga: 0.1
+Tamanho real do vetor: 190001
+Utilizando primo 190027 ao invés  de 190001
+Fator de carga real: 0.1
+Execucao: 31.473ms, 
+Colisoes na estrutura: 55072
+Media de colisoes: 28.98114478
+Numero de comparacoes na estrutura: 155072
+Media de comparacoes: 81.60524557
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************
+****** Inserção Quadratica ******
+Fator de carga: 0.1
+Tamanho real do vetor: 190001
+Utilizando primo 190027 ao invés  de 190001
+Fator de carga real: 0.1
+Execucao: 27.531ms, 
+Colisoes na estrutura: 46619
+Media de colisoes: 24.53282955
+Numero de comparacoes na estrutura: 146619
+Media de comparacoes: 77.15693033
+Numero de falhas de insercao na estrutura: 0
+Numero de chaves repetidas: 1
+***********************

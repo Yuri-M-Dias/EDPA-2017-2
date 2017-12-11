@@ -69,7 +69,7 @@ const int VALOR_FLAG_VAZIO = -1;
 const float LIMITE_FATOR_DE_CARGA = 1;
 
 int main(int argc, char *argv[]) {
-    unsigned long n = 100000;
+    unsigned long n = 10000000;
 
     cout << setprecision(10);
 
