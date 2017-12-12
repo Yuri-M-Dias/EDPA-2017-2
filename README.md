@@ -31,7 +31,7 @@ $ sudo apt-get install cmake
 
 ## Integrantes
 * Caio Sousa <@Caio-Sousa>
-* Michelle <?>
+* Michelle <@mchrisso>
 * Wellington Galvão <@wgalvao>
 * Yuri Matheus <@Yuri-M-Dias>
 
@@ -46,34 +46,3 @@ Tabela hash com endereçamento aberto com sondagem linear e sondagem quadrática
 3. tempo total de processamento (CPU) relativo à construção de cada estrutura;
 4. fator de carga (se for o caso);
 5. número de comparações de chaves em cada estrutura;
-
-## Anotações e discussões
-
-**Notas**:
-* Deve aceitar elementos repetidos, porém não deve os inserir na estrutura,
-apenas contabilizando a inserção;
-* Fazer uma média das comparações necessárias para cada inserção;
-* Contar quantas colisões foram identificadas, antes de serem tratadas;
-* Vetor da hash não precisa ser dinâmico, pode ser declarado estaticamente
-vindo do valor de n fornecido.
-* Tamanho do vetor em relação ao fator de carga = (n / fator de carga)
-* Usar funções de hash diferentes 
-(Divisão? Multiplicação? Um relatório diferente para cada uma)
-
-## Estrutura do relatório
-
-**Máximo de 6 páginas! Manter os resultados sucintos!**
-
-* Apresentação, qual é o nosso problema, e como fizemos.
-* Resultados para um n qualquer grande (1.000.000.000?),
-de uma função hash simples, usando linear e quadrátrica.
-Mostrar as métricas/resultados obtidos para cada um deles.
-Qual fator de carga usar como padrão? "O melhor caso"(0.7)?
-* Testar para diferentes n grandes e pequenos, as duas estruturas,
-teste padrão/básico.
-* Manter o mesmo n grande, mas métricas com outros fatores de carga:
-0,1 - 0,9, para as duas estruturas.
-* Manter o n, mas funções de hash diferentes (divisão, multiplicação, bits...)
-Não é necessário, porém é interessante realizar os testes para os outros
-fatores de carga também.
-
