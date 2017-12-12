@@ -1,3 +1,10 @@
+/*
+ * Projeto final da Matéria EDPA, de 2017-2, do INF-UFG, nível Mestrado.
+ * Tabela Hash: Endereçamento aberto com sondagem linear e quadrática.
+ * Integrantes: Caio César, Michelle Oliveira, Yuri Matheus Dias
+ * e Wellington Galvão.
+ */
+
 #include <cstdio>
 #include <iostream>
 #include <ctime>
